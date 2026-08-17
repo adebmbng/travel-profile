@@ -44,15 +44,19 @@ it('renders record-specific article content without pending metadata copy', () =
   expect(html).not.toContain('will be updated');
 });
 
-it('discloses the current referral and keeps future categories visibly unassigned', () => {
+it('discloses the current referral and gives every tool category neutral guidance', () => {
   const html = renderTravelTools({ locale: 'id' });
   expect(html).toContain('Welcome Pickups');
   expect(html).toContain('Travelpayouts');
   expect(html).toContain('affiliate');
   expect(html).toContain('rel="sponsored nofollow noopener noreferrer"');
-  expect(html).toContain('Segera hadir');
+  expect(html).toContain('Penerbangan');
+  expect(html).toContain('Periksa tanggal fleksibel');
+  expect(html).not.toContain('Segera hadir');
 });
 
 it('does not render unverified local office claims', () => {
-  expect(renderLocalPage({ locale: 'id', city: 'jakarta' })).toContain('JAKARTA_VERIFIED_SERVICE_DETAILS');
+  const html = renderLocalPage({ locale: 'id', city: 'jakarta' });
+  expect(html).toContain('Mulai dengan konteks perjalanan');
+  expect(html).not.toContain('JAKARTA_VERIFIED_SERVICE_DETAILS');
 });

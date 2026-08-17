@@ -89,8 +89,22 @@
 .path-links { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-block: var(--space-4); }
 .hero--catalog { background: linear-gradient(135deg, var(--color-sand), var(--color-ivory)); }
 .catalog-card .price-label { margin: 0; color: var(--color-emerald-800); font-weight: 700; }
+.catalog-card__meta { margin: 0; color: var(--color-muted-ink); font-size: var(--text-sm); font-weight: 700; }
+.price-block { display: grid; gap: var(--space-2); padding: var(--space-3); background: var(--color-sky); border-radius: var(--radius-sm); }
+.price-block .price-label { margin: 0; color: var(--color-emerald-950); font-size: var(--text-lg); }
+.price-block .price-label strong { white-space: nowrap; }
+.price-note { margin: 0; color: var(--color-muted-ink); font-size: var(--text-sm); }
+.price-block .configuration-note { margin: 0; }
 .price-label--hero { font-size: var(--text-lg); }
 .guidance-grid { display: grid; gap: var(--space-4); }
+.catalog-overview { margin-bottom: var(--space-5); }
+.guidance-card { align-content: start; }
+.guidance-card p { margin: 0; }
+.guidance-card .check-list { margin: 0; }
+.guidance-faq { margin-top: var(--space-7); }
+.reference-links { display: grid; gap: var(--space-3); margin-top: var(--space-6); padding: var(--space-5); background: var(--color-sand); border-radius: var(--radius-md); }
+.reference-links h2, .reference-links p { margin: 0; }
+.reference-links ul { display: grid; gap: var(--space-2); margin: 0; padding-left: 1.25rem; }
 .accordion { align-content: start; }
 .accordion summary { display: flex; gap: var(--space-3); align-items: center; justify-content: space-between; padding: 0; color: var(--color-emerald-950); font-family: var(--font-display); font-size: var(--text-lg); font-weight: 700; }
 .accordion summary::after { content: '+'; color: var(--color-emerald-700); font-family: var(--font-sans); font-size: 1.5rem; }
@@ -114,6 +128,9 @@
 .future-tool span { font-weight: 700; }
 .future-tool button[disabled] { justify-self: start; min-height: 2.5rem; padding-inline: .875rem; color: inherit; background: transparent; border: 1px solid currentColor; border-radius: 999px; cursor: not-allowed; }
 .legal-page { min-height: 38vh; }
+.legal-sections { display: grid; gap: var(--space-4); max-width: 54rem; }
+.legal-sections .quiet-card { align-content: start; }
+.legal-sections .quiet-card p { margin: 0; }
 .consent-layer { position: fixed; z-index: 1000; inset: 0; display: grid; align-items: end; padding: var(--space-3); background: rgb(6 61 55 / .42); }
 .consent-panel { display: grid; gap: var(--space-4); width: min(100%, 48rem); padding: var(--space-5); margin-inline: auto; color: var(--color-forest-ink); background: var(--color-ivory); border: 1px solid var(--color-border); border-radius: var(--radius-lg); box-shadow: var(--shadow-md); }
 .consent-panel h2, .consent-panel p { margin: 0; }

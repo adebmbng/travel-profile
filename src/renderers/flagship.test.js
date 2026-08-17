@@ -11,7 +11,8 @@ it('renders equal flagship journeys and a certification-first trust slot', () =>
 
   expect(html).toContain('Hajj &amp; Umrah');
   expect(html).toContain('Worldwide Travel');
-  expect(html).toContain('UMRAH_CERTIFICATION_NAME');
+  expect(html).toContain('Periksa legalitas penyelenggara');
+  expect(html).not.toContain('UMRAH_CERTIFICATION_NAME');
   expect(html).toContain('Konsultasi via WhatsApp');
 });
 

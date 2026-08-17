@@ -8,7 +8,7 @@ const COPY = Object.freeze({
     suffix: ' | Rasuna Travel',
     notFoundTitle: 'Halaman tidak ditemukan | Rasuna Travel',
     notFoundDescription: 'Halaman yang Anda cari tidak tersedia. Gunakan navigasi Rasuna Travel untuk melanjutkan.',
-    defaultDescription: 'Rasuna Travel membantu keluarga Indonesia memulai rencana perjalanan dengan detail yang akan diperbarui setelah terverifikasi.'
+    defaultDescription: 'Rasuna Travel membantu keluarga Indonesia menyusun pertanyaan, membandingkan arah perjalanan, dan mengonfirmasi detail melalui konsultasi.'
   }),
   en: Object.freeze({
     homeTitle: 'Rasuna Travel | Two journeys, one trusted guide',
@@ -16,7 +16,7 @@ const COPY = Object.freeze({
     suffix: ' | Rasuna Travel',
     notFoundTitle: 'Page not found | Rasuna Travel',
     notFoundDescription: 'The page you requested is not available. Use Rasuna Travel navigation to continue.',
-    defaultDescription: 'Rasuna Travel helps Indonesian families begin travel plans with details that will be updated after verification.'
+    defaultDescription: 'Rasuna Travel helps Indonesian families shape questions, compare travel directions, and confirm details through consultation.'
   })
 });
 

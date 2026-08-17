@@ -1,4 +1,5 @@
-import { renderHeader, renderFooter, renderFloatingWhatsApp, renderSectionHeading, renderWhatsAppLink } from './components.js';
+import { renderHeader, renderFooter, renderFloatingWhatsApp, renderSectionHeading, renderWhatsAppLink, routePath } from './components.js';
+import { escapeHtml } from '../lib/escape-html.js';
 import { renderHome } from './home.js';
 import { renderHajjInformation, renderPilgrimageOverview, renderUmrahPackages, renderUmrahPreparation } from './pilgrimage.js';
 import { renderWorldwideOverview } from './worldwide.js';
@@ -11,7 +12,7 @@ const PAGE_COPY = Object.freeze({
   id: Object.freeze({
     homeTitle: 'Rasuna Travel',
     homeText: 'Rencana perjalanan yang dapat dimulai dengan percakapan.',
-    pageText: 'Informasi perjalanan untuk halaman ini akan diperbarui setelah detail terverifikasi.',
+    pageText: 'Gunakan halaman ini untuk menyiapkan pertanyaan dan melanjutkan ke konsultasi dengan konteks yang lebih jelas.',
     notFoundTitle: 'Halaman tidak ditemukan',
     notFoundText: 'Gunakan navigasi untuk kembali ke halaman yang tersedia.',
     pilgrimage: 'Haji & Umrah',
@@ -20,7 +21,7 @@ const PAGE_COPY = Object.freeze({
   en: Object.freeze({
     homeTitle: 'Rasuna Travel',
     homeText: 'Travel plans that can begin with a conversation.',
-    pageText: 'Travel information for this page will be updated after details are verified.',
+    pageText: 'Use this page to prepare questions and continue to consultation with clearer context.',
     notFoundTitle: 'Page not found',
     notFoundText: 'Use the navigation to return to an available page.',
     pilgrimage: 'Hajj & Umrah',
@@ -76,7 +77,7 @@ export function renderRoute(route = {}) {
   const title = isNotFound ? text.notFoundTitle : route.key === 'home' ? text.homeTitle : text.homeTitle;
   const description = isNotFound ? text.notFoundText : route.key === 'home' ? text.homeText : text.pageText;
 
-  return `<section class="page-intro container">${renderSectionHeading({ title, description, level: 1 })}<div class="page-intro__actions"><a class="button button--secondary" href="/${locale}/${locale === 'id' ? 'haji-umrah' : 'hajj-umrah'}/">${text.pilgrimage}</a><a class="button button--secondary" href="/${locale}/${locale === 'id' ? 'wisata-dunia' : 'worldwide'}/">${text.worldwide}</a>${renderWhatsAppLink({ locale })}</div></section>`;
+  return `<section class="page-intro container">${renderSectionHeading({ title, description, level: 1 })}<p>${escapeHtml(isNotFound ? (locale === 'en' ? 'Try one of the two main travel paths or send us a question directly.' : 'Coba salah satu jalur perjalanan utama atau kirimkan pertanyaan secara langsung.') : text.pageText)}</p><div class="page-intro__actions"><a class="button button--secondary" href="${escapeHtml(routePath(locale, 'pilgrimage-overview'))}">${text.pilgrimage}</a><a class="button button--secondary" href="${escapeHtml(routePath(locale, 'worldwide-overview'))}">${text.worldwide}</a><a class="button button--secondary" href="${escapeHtml(routePath(locale, 'packages'))}">${locale === 'en' ? 'View packages' : 'Lihat paket'}</a>${renderWhatsAppLink({ locale })}</div></section>`;
 }
 
 export function renderShell(route, { body = '' } = {}) {
