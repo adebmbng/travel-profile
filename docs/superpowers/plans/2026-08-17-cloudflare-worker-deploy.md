@@ -26,14 +26,15 @@
 - Consumes: repository root, `wrangler.jsonc`, and `package.json`.
 - Produces: a test that requires explicit Worker assets configuration and a deploy command naming the Wrangler config.
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 ```js
 import { readFile } from 'node:fs/promises';
-import { resolve } from 'node:path';
+import { dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
 
-const root = resolve(import.meta.dirname, '..');
+const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 
 describe('Cloudflare Worker deployment configuration', () => {
   it('declares an assets-only Worker rooted at dist', async () => {
@@ -49,7 +50,7 @@ describe('Cloudflare Worker deployment configuration', () => {
 });
 ```
 
-- [ ] **Step 2: Run the test to verify it fails**
+- [x] **Step 2: Run the test to verify it fails**
 
 Run: `npm test -- --run scripts/cloudflare-config.test.mjs`
 
@@ -66,7 +67,7 @@ Expected: FAIL because `wrangler.jsonc` and `deploy:worker` do not exist yet.
 - Consumes: the Vite build output in `dist/`.
 - Produces: Wrangler config with `name`, `compatibility_date`, and `assets.directory`; package script `deploy:worker` invoking Wrangler with that config; Cloudflare setup documentation.
 
-- [ ] **Step 1: Add the minimal Wrangler configuration**
+- [x] **Step 1: Add the minimal Wrangler configuration**
 
 ```json
 {
@@ -79,7 +80,7 @@ Expected: FAIL because `wrangler.jsonc` and `deploy:worker` do not exist yet.
 }
 ```
 
-- [ ] **Step 2: Add the explicit deploy command**
+- [x] **Step 2: Add the explicit deploy command**
 
 Add this package script:
 
@@ -87,7 +88,7 @@ Add this package script:
 "deploy:worker": "npx wrangler deploy --config wrangler.jsonc"
 ```
 
-- [ ] **Step 3: Document Cloudflare Workers Builds settings**
+- [x] **Step 3: Document Cloudflare Workers Builds settings**
 
 Document `npm run build` as the build command, `dist` as the asset output, and `npm run deploy:worker` as the deploy command. Include the local sequence `npm run build` followed by `npm run deploy:worker`.
 
@@ -101,19 +102,19 @@ Document `npm run build` as the build command, `dist` as the asset output, and `
 - Consumes: the explicit Wrangler config and all existing project verification commands.
 - Produces: a committed, pushed deployment fix with fresh evidence.
 
-- [ ] **Step 1: Run the focused regression test**
+- [x] **Step 1: Run the focused regression test**
 
 Run: `npm test -- --run scripts/cloudflare-config.test.mjs`
 
 Expected: PASS.
 
-- [ ] **Step 2: Run the real Wrangler dry run**
+- [x] **Step 2: Run the real Wrangler dry run**
 
 Run: `npm run build` followed by `npx wrangler deploy --dry-run --config wrangler.jsonc`.
 
 Expected: Wrangler accepts `wrangler.jsonc`, uses `dist`, and exits 0 without the `vite.config.js` parse error.
 
-- [ ] **Step 3: Run the complete verification suite**
+- [x] **Step 3: Run the complete verification suite**
 
 Run: `npm test -- --run`, `npm run build`, `npm run check:assets`, `npm run check:routes`, `npm run test:a11y`, and `git diff --check`.
 

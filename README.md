@@ -13,6 +13,17 @@ npm run build
 
 The production build writes crawlable HTML documents to `dist/`, including localized route pages, `sitemap.xml`, `robots.txt`, `_redirects`, and `redirects.json`.
 
+## Cloudflare Workers deployment
+
+This is an assets-only Cloudflare Worker. The explicit `wrangler.jsonc` configuration points Wrangler at the Vite output in `dist/`, which prevents Wrangler from trying to infer a Worker entry point from `vite.config.js`.
+
+For Cloudflare Workers Builds, use:
+
+- Build command: `npm run build`
+- Deploy command: `npm run deploy:worker`
+
+For a local deployment, run `npm run build` and then `npm run deploy:worker`. Git operations use the repository's SSH remote, while Wrangler uses Cloudflare authentication configured in the deployment environment; no application secrets are committed to this repository.
+
 ## Verification commands
 
 ```bash
