@@ -1,6 +1,7 @@
 import { PACKAGES } from '../site-data.js';
 import { escapeHtml } from '../lib/escape-html.js';
 import { renderWhatsAppLink } from './components.js';
+import { renderPackagePrice } from './catalog.js';
 
 const COPY = Object.freeze({
   id: Object.freeze({
@@ -59,7 +60,7 @@ export function renderJourneyRecommendation({ locale = 'id', result } = {}) {
 
   const selected = PACKAGES.find((item) => item.slug === result.slug);
   const name = selected?.labels?.[locale] ?? selected?.labels?.id ?? result.slug;
-  return `<section class="journey-result" aria-live="polite"><h3>${escapeHtml(text.recommendation)}</h3><p><strong>${escapeHtml(name)}</strong></p><p>${escapeHtml(text.staticPackage)}</p>${renderWhatsAppLink({ locale, packageName: name })}</section>`;
+  return `<section class="journey-result" aria-live="polite"><h3>${escapeHtml(text.recommendation)}</h3><p><strong>${escapeHtml(name)}</strong></p>${selected ? renderPackagePrice(selected, locale) : ''}<p>${escapeHtml(text.staticPackage)}</p>${renderWhatsAppLink({ locale, packageName: name })}</section>`;
 }
 
 export function renderJourneyFinder({ locale = 'id' } = {}) {

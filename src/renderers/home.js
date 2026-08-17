@@ -2,6 +2,7 @@ import { ARTICLES, DESTINATIONS, PACKAGES, SITE_CONFIG } from '../site-data.js';
 import { escapeHtml } from '../lib/escape-html.js';
 import { routePath, renderCardImage, renderHeroImage, renderSectionHeading, renderWhatsAppLink } from './components.js';
 import { renderJourneyFinder } from './journey-finder.js';
+import { renderPackagePrice } from './catalog.js';
 
 const COPY = Object.freeze({
   id: Object.freeze({
@@ -38,7 +39,7 @@ function copy(locale) { return COPY[locale] ?? COPY.id; }
 function label(item, locale) { return item.labels?.[locale] ?? item.labels?.id ?? ''; }
 
 function renderPackageCards(locale) {
-  return PACKAGES.map((item) => `<article class="content-card">${renderCardImage(item.cardAsset ?? item.heroAsset, label(item, locale))}<div><h3><a href="${escapeHtml(routePath(locale, 'package-detail', { slug: item.slug }))}">${escapeHtml(label(item, locale))}</a></h3><p>${locale === 'en' ? 'Static journey guidance; details are confirmed in consultation.' : 'Arahan perjalanan statis; detail dikonfirmasi dalam konsultasi.'}</p>${renderWhatsAppLink({ locale, packageName: label(item, locale) })}</div></article>`).join('');
+  return PACKAGES.map((item) => `<article class="content-card">${renderCardImage(item.cardAsset ?? item.heroAsset, label(item, locale))}<div><h3><a href="${escapeHtml(routePath(locale, 'package-detail', { slug: item.slug }))}">${escapeHtml(label(item, locale))}</a></h3><p>${escapeHtml(item.description?.[locale] ?? item.description?.id ?? '')}</p>${renderPackagePrice(item, locale)}${renderWhatsAppLink({ locale, packageName: label(item, locale) })}</div></article>`).join('');
 }
 
 function bilingualPillarLabel(id, text) {
