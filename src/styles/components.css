@@ -20,7 +20,7 @@
 .button:hover { transform: translateY(-1px); color: inherit; }
 .button--primary, .button--whatsapp { color: #fff; background: var(--color-emerald-800); }
 .button--secondary { color: var(--color-emerald-950); background: var(--color-sand); }
-.page-intro { padding-block: var(--space-8); }
+.page-intro { padding-block: var(--space-8); background: url('/assets/generated/passport-stamp-texture.png') top right / 18rem auto no-repeat; }
 .section-heading { max-width: 48rem; margin-bottom: var(--space-5); }
 .section-heading h1 { margin-bottom: var(--space-4); font-size: var(--text-2xl); }
 .section-heading h2 { margin-bottom: var(--space-3); font-size: var(--text-xl); }
@@ -43,6 +43,9 @@
 .trust-ribbon p { margin: 0; color: #d5e8e3; }
 .hero { position: relative; overflow: clip; background: var(--color-sand); }
 .hero--home::after { position: absolute; right: 7%; bottom: 9%; left: 7%; height: 2px; pointer-events: none; content: ''; background: repeating-linear-gradient(90deg, var(--color-gold) 0 1.5rem, transparent 1.5rem 2.25rem); opacity: .65; transform-origin: left center; animation: rasuna-route-line 1.2s var(--motion-ease) both; }
+.page-transition-ready .site-shell { animation: rasuna-page-enter var(--motion-slow) var(--motion-ease) both; }
+.hero--home .hero__content > div { animation: rasuna-journey-enter var(--motion-slow) var(--motion-ease) both; }
+.hero--home .hero__image { animation: rasuna-journey-enter var(--motion-slow) var(--motion-ease) .12s both; }
 .hero__content { display: grid; gap: var(--space-5); align-items: center; padding-block: var(--space-7); }
 .hero__content > div { position: relative; z-index: 1; }
 .hero__image { display: block; overflow: hidden; min-height: 17rem; border-radius: var(--radius-lg); box-shadow: var(--shadow-md); }
@@ -85,6 +88,11 @@
 .catalog-card .price-label { margin: 0; color: var(--color-emerald-800); font-weight: 700; }
 .price-label--hero { font-size: var(--text-lg); }
 .guidance-grid { display: grid; gap: var(--space-4); }
+.accordion { align-content: start; }
+.accordion summary { display: flex; gap: var(--space-3); align-items: center; justify-content: space-between; padding: 0; color: var(--color-emerald-950); font-family: var(--font-display); font-size: var(--text-lg); font-weight: 700; }
+.accordion summary::after { content: '+'; color: var(--color-emerald-700); font-family: var(--font-sans); font-size: 1.5rem; }
+.accordion[open] summary::after { content: '−'; }
+.accordion > p { margin: var(--space-3) 0 0; }
 .related-content { display: grid; gap: var(--space-4); margin-top: var(--space-6); padding: var(--space-5); background: var(--color-sand); border-radius: var(--radius-md); }
 .related-content h2, .related-content h3 { margin: 0; }
 .related-content ul { display: grid; gap: var(--space-2); padding-left: 1.25rem; }
@@ -98,7 +106,7 @@
 .referral-card { grid-template-columns: minmax(0, 1fr); }
 .external-warning { padding: var(--space-3); color: var(--color-emerald-950); background: var(--color-sky); border-left: .25rem solid var(--color-emerald-700); border-radius: var(--radius-sm); font-size: var(--text-sm); }
 .travel-tools__fallback { align-content: start; }
-.future-tool { display: grid; gap: var(--space-3); min-height: 12rem; padding: var(--space-4); color: var(--color-muted-ink); background: var(--color-sand); border: 1px dashed var(--color-border); border-radius: var(--radius-md); }
+.future-tool { display: grid; gap: var(--space-3); min-height: 12rem; padding: var(--space-4); color: var(--color-muted-ink); background: linear-gradient(rgb(241 231 214 / .88), rgb(241 231 214 / .88)), url('/assets/generated/referral-category-illustrations.png') center / cover; border: 1px dashed var(--color-border); border-radius: var(--radius-md); }
 .future-tool h3 { margin: 0; color: var(--color-ink); }
 .future-tool span { font-weight: 700; }
 .future-tool button[disabled] { justify-self: start; min-height: 2.5rem; padding-inline: .875rem; color: inherit; background: transparent; border: 1px solid currentColor; border-radius: 999px; cursor: not-allowed; }
@@ -119,7 +127,17 @@
   to { clip-path: inset(0); }
 }
 
-[data-reduced-motion] .hero--home::after { animation: none; }
+@keyframes rasuna-page-enter {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes rasuna-journey-enter {
+  from { opacity: 0; transform: translateY(.75rem); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+[data-reduced-motion] .hero--home::after, [data-reduced-motion] .site-shell, [data-reduced-motion] .hero--home .hero__content > div, [data-reduced-motion] .hero--home .hero__image { animation: none; }
 [data-reduced-motion] .button:hover { transform: none; }
 
 @media (min-width: 56rem) {

@@ -1,5 +1,9 @@
 import { describe, expect, it } from 'vitest';
-import { buildStaticDocument, publicRoutePaths } from './prerender.mjs';
+import { mkdtemp, readFile, rm } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { buildStaticDocument, prerenderRoutes, publicRoutePaths } from './prerender.mjs';
+import { legacyRedirects } from './generate-redirect-map.mjs';
 
 describe('production route documents', () => {
   it('enumerates localized static and known dynamic routes', () => {
@@ -40,5 +44,31 @@ describe('production route documents', () => {
     expect(indonesianHome).toContain('name="twitter:card" content="summary_large_image"');
     expect(englishHome).toContain('/assets/generated/og-home-background.png');
     expect(worldwide).not.toContain('/assets/generated/og-home-background.png');
+  });
+
+  it('writes sitemap, robots, and redirect artifacts with static routes', async () => {
+    const outDir = await mkdtemp(join(tmpdir(), 'rasuna-prerender-'));
+
+    try {
+      await prerenderRoutes({
+        outDir,
+        sourceHtml: '<link rel="stylesheet" href="/assets/index-abc.css"><script type="module" src="/assets/index-abc.js"></script>'
+      });
+
+      expect(await readFile(join(outDir, 'sitemap.xml'), 'utf8')).toContain('<urlset');
+      expect(await readFile(join(outDir, 'robots.txt'), 'utf8')).toContain('Sitemap: /sitemap.xml');
+      expect(await readFile(join(outDir, 'redirects.json'), 'utf8')).toContain('/tentang-kami/');
+      expect(await readFile(join(outDir, '_redirects'), 'utf8')).toContain('/tentang-kami/');
+    } finally {
+      await rm(outDir, { recursive: true, force: true });
+    }
+  });
+
+  it('maps legacy WordPress routes to the localized equivalents', () => {
+    expect(legacyRedirects()).toMatchObject({
+      '/tentang-kami/': '/id/tentang/',
+      '/travel-tools/': '/id/travel-tools/',
+      '/affiliates/': '/id/travel-tools/'
+    });
   });
 });

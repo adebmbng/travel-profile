@@ -1,0 +1,3 @@
+Contact: /id/kontak/
+Policy: /id/privasi/
+Preferred-Languages: id, en

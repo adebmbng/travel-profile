@@ -1,5 +1,31 @@
 const asset = (filename) => `/assets/generated/${filename}`;
 
+export const GENERATED_ASSETS = Object.freeze([
+  'article-family-travel-planning.png',
+  'consultation-scene.png',
+  'destination-bali.png',
+  'destination-japan.png',
+  'destination-turkiye.png',
+  'family-group-travel.png',
+  'hajj-information.png',
+  'hero-dual-journey-master.png',
+  'hero-umrah-master.png',
+  'hero-umrah-mobile.png',
+  'hero-worldwide-master.png',
+  'hero-worldwide-mobile.png',
+  'local-bandung.png',
+  'local-jakarta.png',
+  'og-home-background.png',
+  'package-detail-family-hero.png',
+  'passport-stamp-texture.png',
+  'referral-airport-transfer.png',
+  'referral-category-illustrations.png',
+  'route-map-texture.png',
+  'traveler-couple.png',
+  'traveler-solo.png',
+  'umrah-preparation-flatlay.png'
+]);
+
 export const LANGUAGES = Object.freeze({
   id: Object.freeze({ code: 'id', label: 'Bahasa Indonesia', pathPrefix: 'id' }),
   en: Object.freeze({ code: 'en', label: 'English', pathPrefix: 'en' })

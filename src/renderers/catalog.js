@@ -26,8 +26,12 @@ function destinationFor(slug) { return DESTINATIONS.find((item) => item.slug ===
 function articleFor(slug) { return ARTICLES.find((item) => item.slug === slug); }
 
 function priceLabel(item, text) {
-  return item?.pricing?.mode === 'from'
-    ? `${text.from} ${escapeHtml(item.pricing.value)}`
+  const value = item?.pricing?.value;
+  const verified = item?.pricing?.verified === true
+    && value
+    && !/^[A-Z][A-Z0-9_]+$/.test(String(value));
+  return item?.pricing?.mode === 'from' && verified
+    ? `${text.from} ${escapeHtml(value)}`
     : text.consultPrice;
 }
 
@@ -49,7 +53,7 @@ function relatedLinks(locale, destination) {
 function guidanceSections(locale) {
   const text = copy(locale);
   const sections = [[text.itinerary, text.itineraryText], [text.includes, text.includesText], [text.excludes, text.excludesText], [text.suitable, text.suitableText], [text.preparation, text.preparationText], [text.faq, text.faqText]];
-  return `<div class="guidance-grid">${sections.map(([heading, body]) => `<section class="quiet-card"><h2>${escapeHtml(heading)}</h2><p>${escapeHtml(body)}</p></section>`).join('')}</div>`;
+  return `<div class="guidance-grid">${sections.map(([heading, body]) => `<details class="quiet-card accordion" data-accordion open><summary><span role="heading" aria-level="2">${escapeHtml(heading)}</span></summary><p>${escapeHtml(body)}</p></details>`).join('')}</div>`;
 }
 
 export function renderPackageDirectory({ locale = 'id', pillar } = {}) {

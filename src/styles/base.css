@@ -1,8 +1,8 @@
 * { box-sizing: border-box; }
 
-html { color: var(--color-forest-ink); background: var(--color-ivory); font-family: var(--font-sans); line-height: 1.6; scroll-behavior: smooth; }
+html { color: var(--color-forest-ink); background: var(--color-ivory); font-family: var(--font-sans); line-height: 1.6; scroll-behavior: smooth; overflow-x: clip; }
 body { min-width: 20rem; margin: 0; background: var(--color-ivory); }
-img { display: block; max-width: 100%; background: var(--color-sand); }
+img { display: block; max-width: 100%; height: auto; background: var(--color-sand); }
 a { color: inherit; text-decoration-thickness: .08em; text-underline-offset: .16em; }
 a:hover { color: var(--color-emerald-700); }
 button, input, textarea, select { font: inherit; }
@@ -16,6 +16,8 @@ h1, h2, h3 { color: var(--color-emerald-950); font-family: var(--font-display); 
 .skip-link { position: fixed; z-index: 100; top: var(--space-3); left: var(--space-3); padding: var(--space-3) var(--space-4); color: var(--color-ivory); background: var(--color-emerald-950); transform: translateY(-150%); transition: transform var(--motion-fast) var(--motion-ease); }
 .skip-link:focus { transform: translateY(0); }
 .language-status { position: fixed; inline-size: 1px; block-size: 1px; overflow: hidden; clip-path: inset(50%); }
+summary { cursor: pointer; }
+summary::marker { color: var(--color-emerald-700); }
 
 @media (prefers-reduced-motion: reduce) {
   :root { --motion-fast: 0ms; --motion-base: 0ms; --motion-slow: 0ms; }

@@ -1,9 +1,10 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { ARTICLES, DESTINATIONS, LANGUAGES, PACKAGES, SUPPORTED_ROUTES } from '../src/site-data.js';
+import { ARTICLES, DESTINATIONS, LANGUAGES, PACKAGES, SITE_CONFIG, SUPPORTED_ROUTES } from '../src/site-data.js';
 import { INITIAL_SCRIPT_TAG, INITIAL_STYLE_TAGS, renderInitialDocument } from '../src/renderers/document.js';
 import { localizedPath } from '../src/lib/route-utils.js';
+import { legacyRedirects, renderRedirectJson, renderRedirects } from './generate-redirect-map.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const DYNAMIC_ROUTE_ITEMS = Object.freeze({
@@ -39,6 +40,32 @@ export function publicRoutePaths() {
   return [...paths].sort();
 }
 
+export function indexableRoutePaths() {
+  return publicRoutePaths().filter((pathname) => !pathname.endsWith('/404/'));
+}
+
+function xmlEscape(value) {
+  return String(value).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&apos;');
+}
+
+function publicUrl(pathname) {
+  if (!/^https?:\/\//i.test(String(SITE_CONFIG.SITE_ORIGIN))) return pathname;
+  try {
+    return new URL(pathname, SITE_CONFIG.SITE_ORIGIN).toString();
+  } catch {
+    return pathname;
+  }
+}
+
+export function buildSitemap(paths = indexableRoutePaths()) {
+  const entries = paths.map((pathname) => `<url><loc>${xmlEscape(publicUrl(pathname))}</loc></url>`).join('');
+  return `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${entries}</urlset>\n`;
+}
+
+export function buildRobots() {
+  return `User-agent: *\nAllow: /\nSitemap: ${publicUrl('/sitemap.xml')}\n`;
+}
+
 export function extractAssetTags(sourceHtml) {
   const styles = [...sourceHtml.matchAll(/<link\b(?=[^>]*\brel="stylesheet")[^>]*>/g)].map((match) => match[0]).join('');
   const scripts = [...sourceHtml.matchAll(/<script\b(?=[^>]*\bsrc="\/assets\/)[^>]*><\/script>/g)].map((match) => match[0]).join('');
@@ -64,12 +91,18 @@ export async function prerenderRoutes({ outDir = resolve(ROOT, 'dist'), sourceHt
   const builtHtml = sourceHtml ?? await readFile(resolve(outDir, 'index.html'), 'utf8');
   const assets = extractAssetTags(builtHtml);
   const paths = publicRoutePaths();
+  await mkdir(outDir, { recursive: true });
 
   await Promise.all(paths.map(async (pathname) => {
     const file = outputFile(outDir, pathname);
     await mkdir(dirname(file), { recursive: true });
     await writeFile(file, buildStaticDocument(pathname, assets));
   }));
+
+  await writeFile(resolve(outDir, 'sitemap.xml'), buildSitemap());
+  await writeFile(resolve(outDir, 'robots.txt'), buildRobots());
+  await writeFile(resolve(outDir, 'redirects.json'), renderRedirectJson(legacyRedirects()));
+  await writeFile(resolve(outDir, '_redirects'), renderRedirects(legacyRedirects()));
 
   return paths;
 }

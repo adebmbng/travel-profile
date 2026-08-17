@@ -5,10 +5,14 @@ import { renderLocalPage } from './content-pages.js';
 
 it('renders a package detail with mixed price semantics and WhatsApp CTA', () => {
   const html = renderPackageDetail({ locale: 'id', slug: 'family-lake-escape' });
-  expect(html).toContain('Mulai dari');
+  expect(html).toContain('Konsultasikan harga');
   expect(html).toContain('Konsultasi via WhatsApp');
   expect(html).toContain('package-detail-family-hero.png');
   expect(html).not.toContain('tersedia sekarang');
+});
+
+it('renders package guidance as keyboard-friendly native accordions', () => {
+  expect(renderPackageDetail({ locale: 'id', slug: 'family-lake-escape' })).toContain('<details class="quiet-card accordion"');
 });
 
 it('renders destination detail with related package and article links', () => {

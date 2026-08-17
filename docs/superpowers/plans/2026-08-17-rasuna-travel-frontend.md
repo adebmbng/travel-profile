@@ -140,7 +140,7 @@ git commit -m "feat: add Vite foundation and route data"
 - `renderHeader({ locale, currentKey })`, `renderFooter({ locale })`, `renderWhatsAppLink(context)`, `renderLanguageSwitcher(route)`, `renderBreadcrumbs(items)`, `renderButton(config)`, `renderCardImage(asset, alt)`, and `renderSectionHeading(config)` return escaped HTML strings.
 - `main.js` resolves `window.location.pathname`, injects the route renderer into `#app`, then calls `initClient(document)`.
 
-- [ ] **Step 1: Write failing renderer tests**
+- [x] **Step 1: Write failing renderer tests**
 
 ```js
 import { describe, expect, it } from 'vitest';
@@ -175,31 +175,31 @@ it('renders document metadata and a no-JavaScript fallback', () => {
 });
 ```
 
-- [ ] **Step 2: Run tests and verify they fail for missing renderer modules**
+- [x] **Step 2: Run tests and verify they fail for missing renderer modules**
 
 Run: `npm test -- --run src/renderers/layout.test.js`
 
 Expected: FAIL with module-not-found errors.
 
-- [ ] **Step 3: Define design tokens and base styles**
+- [x] **Step 3: Define design tokens and base styles**
 
 Implement emerald, ivory, sand, sky, gold, coral, forest ink, spacing, radius, elevation, type scale, container widths, focus ring, motion durations, and reduced-motion variables. Import Plus Jakarta Sans and Fraunces with local-safe fallbacks. Set `box-sizing`, visible focus, selection color, `:focus-visible`, reduced-motion media rules, and a stable image background.
 
-- [ ] **Step 4: Implement the shared renderers and shell**
+- [x] **Step 4: Implement the shared renderers and shell**
 
 Render semantic `header`, `nav`, `main`, `footer`, skip link, logo placeholder mark, two journey nav groups, ID/EN switch, WhatsApp CTA, disclosure links, local pages, article pages, and legal links. Use actual generated assets only where the route data names them. Keep all unknown business fields behind visible “Informasi akan diperbarui” copy and configuration checks.
 
-- [ ] **Step 5: Implement browser boot and progressive enhancement**
+- [x] **Step 5: Implement browser boot and progressive enhancement**
 
 `main.js` renders the same route HTML used by the browser. `client.js` attaches only behavior: menu toggle, language navigation, scroll-reveal observers, reduced-motion detection, and CTA event hooks. The page must remain readable when JavaScript is disabled.
 
-- [ ] **Step 6: Run renderer tests and a dev smoke check**
+- [x] **Step 6: Run renderer tests and a dev smoke check**
 
 Run: `npm test -- --run src/renderers/layout.test.js` and `npm run dev -- --host 127.0.0.1`.
 
 Expected: tests pass; the dev server starts without console exceptions.
 
-- [ ] **Step 7: Commit the shell**
+- [x] **Step 7: Commit the shell**
 
 ```bash
 git add src/styles src/renderers src/client.js src/main.js src/site-data.js
@@ -226,7 +226,7 @@ git commit -m "feat: add design system and global shell"
 - `renderJourneyFinder({ locale })` returns a frontend-only recommendation form with deterministic recommendations from `site-data.js`.
 - `recommendJourney(input, data)` returns `{ type: 'package'|'consultation', slug?: string, whatsappContext: string }`.
 
-- [ ] **Step 1: Write failing flagship-page tests**
+- [x] **Step 1: Write failing flagship-page tests**
 
 ```js
 import { describe, expect, it } from 'vitest';
@@ -252,31 +252,31 @@ it('recommends a static family package without claiming live inventory', () => {
 });
 ```
 
-- [ ] **Step 2: Run tests and verify red**
+- [x] **Step 2: Run tests and verify red**
 
 Run: `npm test -- --run src/renderers/flagship.test.js`
 
 Expected: FAIL because page renderers and journey recommendation do not exist.
 
-- [ ] **Step 3: Implement the homepage body**
+- [x] **Step 3: Implement the homepage body**
 
 Include certification-first trust ribbon with safe dummy fields, equal dual hero, journey finder, featured packages, two storytelling panels, Why Rasuna, consultation process, destination rail, verified-testimonial guard, Travel Tools preview, article rail, Jakarta/Bandung block, and final WhatsApp CTA. Use `hero-dual-journey-master.png`, `og-home-background.png`, `consultation-scene.png`, and `route-map-texture.png` where appropriate.
 
-- [ ] **Step 4: Implement pilgrimage and worldwide bodies**
+- [x] **Step 4: Implement pilgrimage and worldwide bodies**
 
 Use calm pilgrimage pacing and `hero-umrah-master.png`, `hero-umrah-mobile.png`, `hajj-information.png`, `umrah-preparation-flatlay.png`; use exploratory worldwide pacing and `hero-worldwide-master.png`, `hero-worldwide-mobile.png`, `family-group-travel.png`, `traveler-couple.png`, and `traveler-solo.png`. Do not expose unsupported Hajj credentials.
 
-- [ ] **Step 5: Implement deterministic journey-finder behavior**
+- [x] **Step 5: Implement deterministic journey-finder behavior**
 
 Use select/radio inputs for pillar, group, approximate period, and budget. On submit, show a recommendation card or open a contextual WhatsApp link. The UI must state that results are guidance from static content, not live availability.
 
-- [ ] **Step 6: Run tests and inspect routes in the browser**
+- [x] **Step 6: Run tests and inspect routes in the browser**
 
 Run: `npm test -- --run src/renderers/flagship.test.js` and open `/id/`, `/id/haji-umrah/`, `/id/wisata-dunia/` in the dev server.
 
 Expected: tests pass; all three routes render with no missing asset requests.
 
-- [ ] **Step 7: Commit flagship pages**
+- [x] **Step 7: Commit flagship pages**
 
 ```bash
 git add src/renderers src/styles/components.css src/main.js
@@ -303,7 +303,7 @@ git commit -m "feat: add homepage and flagship journeys"
 - `renderTravelTools({ locale })` renders Welcome Pickups plus future-ready disabled categories.
 - `renderLegalPage({ locale, key })` renders privacy, cookies, affiliate disclosure, terms, and accessibility pages.
 
-- [ ] **Step 1: Write failing catalog and referral tests**
+- [x] **Step 1: Write failing catalog and referral tests**
 
 ```js
 import { expect, it } from 'vitest';
@@ -338,31 +338,31 @@ it('does not render unverified local office claims', () => {
 });
 ```
 
-- [ ] **Step 2: Run tests and verify red**
+- [x] **Step 2: Run tests and verify red**
 
 Run: `npm test -- --run src/renderers/catalog.test.js`
 
 Expected: FAIL because catalog, content, and Travel Tools renderers do not exist.
 
-- [ ] **Step 3: Implement package and destination templates**
+- [x] **Step 3: Implement package and destination templates**
 
 Render static directory cards and detail pages with facts, mixed price mode, itinerary, inclusions, exclusions, suitability, preparation, FAQs, related content, disclosure-safe referral cards, and sticky WhatsApp CTA. Use `package-detail-family-hero.png`, destination assets, and `article-family-travel-planning.png`.
 
-- [ ] **Step 4: Implement articles and local pages**
+- [x] **Step 4: Implement articles and local pages**
 
 Create distinct Jakarta and Bandung copy blocks guarded by their configuration keys. Render article index/detail pages with author, reviewer, dates, source links, reading time, related packages, and review-date labels. Do not render dummy reviews as verified.
 
-- [ ] **Step 5: Implement Travel Tools and legal pages**
+- [x] **Step 5: Implement Travel Tools and legal pages**
 
 Render the confirmed Welcome Pickups provider with a disclosure and external-link warning. Render future flight, hotel, activity, insurance, visa, transport, connectivity, and essentials categories as `Segera hadir` unless a provider record is configured. Add affiliate disclosure, privacy, cookie, terms, and accessibility pages.
 
-- [ ] **Step 6: Run focused tests and inspect representative pages**
+- [x] **Step 6: Run focused tests and inspect representative pages**
 
 Run: `npm test -- --run src/renderers/catalog.test.js`; inspect `/id/paket/`, `/id/travel-tools/`, `/id/jakarta/`, `/id/artikel/`, and `/id/privacy/`.
 
 Expected: all tests pass and no page contains an unsupported claim.
 
-- [ ] **Step 7: Commit supporting pages**
+- [x] **Step 7: Commit supporting pages**
 
 ```bash
 git add src/renderers src/site-data.js src/main.js src/styles/components.css
@@ -393,7 +393,7 @@ git commit -m "feat: add catalog content tools and legal pages"
 - `getReferralState(provider, now)` returns `active`, `expired`, `missing`, or `disabled`.
 - `buildReferralLink(provider, context)` returns a validated external URL or `null`.
 
-- [ ] **Step 1: Write failing consent, analytics, and referral tests**
+- [x] **Step 1: Write failing consent, analytics, and referral tests**
 
 ```js
 import { expect, it } from 'vitest';
@@ -423,31 +423,31 @@ it('rejects referral links with unsafe protocols and expired providers', () => {
 });
 ```
 
-- [ ] **Step 2: Run tests and verify red**
+- [x] **Step 2: Run tests and verify red**
 
 Run: `npm test -- --run src/lib/consent.test.js src/lib/analytics.test.js src/lib/referrals.test.js`
 
 Expected: FAIL because the behavior modules do not exist.
 
-- [ ] **Step 3: Implement consent and event behavior**
+- [x] **Step 3: Implement consent and event behavior**
 
-Use a first-party local-storage key with explicit analytics and marketing booleans. Expose a settings dialog with accept, reject, and customize actions. Load GTM/GA4/Meta only after consent; retain anonymous page functionality without tracking. Define the approved event names and ensure no PII appears in parameters.
+Use a first-party local-storage key with explicit analytics and marketing booleans. Expose a settings dialog with accept, reject, and customize actions. Load GTM/GA4/Google Ads/Meta only after consent; retain anonymous page functionality without tracking. Persist only approved UTM attribution after marketing consent. Define the approved event names and ensure no PII appears in parameters.
 
-- [ ] **Step 4: Implement WhatsApp and referral safety**
+- [x] **Step 4: Implement WhatsApp and referral safety**
 
 Use `PRIMARY_WHATSAPP_NUMBER` only when configured; otherwise render a visible configuration warning in development and a non-breaking contact fallback in production. Validate `https:` external URLs, preserve UTM context, add `rel="sponsored nofollow noopener noreferrer"` where appropriate, and provide disclosure and fallback consultation.
 
-- [ ] **Step 5: Implement motion and interaction layers**
+- [x] **Step 5: Implement motion and interaction layers**
 
 Add scroll reveals, hero route-line drawing, split-journey transitions, card hover/tap states, page-transition classes, menu focus trap, accordion behavior, language-switch announcements, consent-dialog focus management, and reduced-motion overrides. Use CSS transforms/opacity for motion and pause observers when hidden.
 
-- [ ] **Step 6: Run tests and manual keyboard/reduced-motion checks**
+- [x] **Step 6: Run tests and manual keyboard/reduced-motion checks**
 
 Run: `npm test -- --run src/lib/consent.test.js src/lib/analytics.test.js src/lib/referrals.test.js`; then test keyboard navigation with browser devtools and emulate `prefers-reduced-motion: reduce`.
 
 Expected: tests pass; keyboard focus remains visible; reduced motion removes non-essential transitions.
 
-- [ ] **Step 7: Commit behavior modules**
+- [x] **Step 7: Commit behavior modules**
 
 ```bash
 git add src/lib src/client.js src/client-interactions.js src/styles
@@ -477,7 +477,7 @@ git commit -m "feat: add motion consent analytics and referral behavior"
 - `prerenderRoutes({ sourceHtml, outDir, routes })` writes one `index.html` per public route plus `sitemap.xml` and `robots.txt`.
 - `legacyRedirects()` returns the old WordPress-to-new-route mapping.
 
-- [ ] **Step 1: Write failing SEO and prerender tests**
+- [x] **Step 1: Write failing SEO and prerender tests**
 
 ```js
 import { expect, it } from 'vitest';
@@ -499,31 +499,31 @@ it('never emits unverified review or certification schema', () => {
 });
 ```
 
-- [ ] **Step 2: Run tests and verify red**
+- [x] **Step 2: Run tests and verify red**
 
 Run: `npm test -- --run src/seo.test.js scripts/prerender.test.mjs`
 
 Expected: FAIL because SEO and prerender modules do not exist.
 
-- [ ] **Step 3: Implement metadata and structured data**
+- [x] **Step 3: Implement metadata and structured data**
 
 Generate unique ID/EN titles and descriptions from route data, absolute canonical path placeholders, reciprocal `hreflang`, Open Graph/Twitter fields, breadcrumbs, Organization/TravelAgency, Service, Article, FAQ, and Offer JSON-LD only where supported by visible verified content. Escape all content and avoid dummy schema.
 
-- [ ] **Step 4: Implement the post-build prerender script**
+- [x] **Step 4: Implement the post-build prerender script**
 
 After Vite writes `dist/index.html`, import the pure renderers and route table. Write each route to `dist/<locale>/<segments>/index.html` with static body content, metadata, language attributes, shared asset URLs, and script/module references. Generate `dist/sitemap.xml` for indexable routes, `dist/robots.txt` with a sitemap URL, and a redirect map for prior routes such as `/tentang-kami/`, `/layanan/`, `/travel-tools/`, `/artikel/`, `/kontak/`, and `/affiliates/`.
 
-- [ ] **Step 5: Wire the production build command**
+- [x] **Step 5: Wire the production build command**
 
 Set `npm run build` to run `vite build && node scripts/prerender.mjs`. Ensure all nested output directories are created with Node `fs.mkdir({ recursive: true })` and that the script exits non-zero when a route renderer or asset reference is missing.
 
-- [ ] **Step 6: Run SEO tests and full build**
+- [x] **Step 6: Run SEO tests and full build**
 
 Run: `npm test -- --run src/seo.test.js scripts/prerender.test.mjs` and `npm run build`.
 
 Expected: all tests pass; `dist/id/index.html`, `dist/en/index.html`, nested route HTML, `dist/sitemap.xml`, and `dist/robots.txt` exist; build exits 0.
 
-- [ ] **Step 7: Commit static SEO output tooling**
+- [x] **Step 7: Commit static SEO output tooling**
 
 ```bash
 git add scripts src/seo.js src/seo.test.js public package.json vite.config.js src/renderers/document.js src/site-data.js
@@ -548,29 +548,29 @@ git commit -m "feat: add static prerendering and technical SEO"
 - `scripts/check-routes.mjs` exits non-zero for missing prerendered route files, duplicate canonical paths, or missing language alternates.
 - `tests/accessibility-smoke.test.mjs` checks generated HTML for landmarks, skip link, language, heading presence, alt attributes, and focusable controls.
 
-- [ ] **Step 1: Write failing verification tests and checks**
+- [x] **Step 1: Write failing verification tests and checks**
 
 Create tests that expect the current incomplete project to fail: route files do not exist, asset references are incomplete, and generated HTML is not yet available.
 
-- [ ] **Step 2: Run verification checks and observe the expected red state**
+- [x] **Step 2: Run verification checks and observe the expected red state**
 
 Run: `npm test -- --run tests/accessibility-smoke.test.mjs`; `node scripts/check-assets.mjs`; `node scripts/check-routes.mjs`.
 
 Expected: failures identify missing build artifacts, not test syntax errors.
 
-- [ ] **Step 3: Implement responsive and accessibility refinements**
+- [x] **Step 3: Implement responsive and accessibility refinements**
 
 Verify 360px, 768px, 1024px, and 1440px layouts; preserve touch target size, visible focus, semantic buttons/links, alt text, contrast, heading order, dialog announcements, and no horizontal overflow. Use `loading="lazy"` for below-fold images, explicit image dimensions, `decoding="async"`, and no auto-playing video.
 
-- [ ] **Step 4: Implement asset and route checkers**
+- [x] **Step 4: Implement asset and route checkers**
 
 Check every required file in `public/assets/generated/`, every manifest entry, every route in `SUPPORTED_ROUTES`, every ID/EN alternate, and every canonical output. Fail on unresolved required fields being rendered as factual claims.
 
-- [ ] **Step 5: Add a user-facing README**
+- [x] **Step 5: Add a user-facing README**
 
 Document `npm install`, `npm run dev`, `npm test`, `npm run build`, route conventions, configuration keys, how to replace dummy certification/measurement/local facts, where generated assets live, and the required human review for sacred imagery and vector logo redraw.
 
-- [ ] **Step 6: Run the complete verification suite**
+- [x] **Step 6: Run the complete verification suite**
 
 Run:
 
@@ -583,7 +583,7 @@ node scripts/check-routes.mjs
 
 Expected: all tests pass; build exits 0; asset and route checkers exit 0; no warnings about missing imports or missing files.
 
-- [ ] **Step 7: Commit verification and documentation**
+- [x] **Step 7: Commit verification and documentation**
 
 ```bash
 git add tests scripts src/styles package.json README.md
@@ -592,9 +592,9 @@ git commit -m "chore: add accessibility performance and launch checks"
 
 ## Self-review checklist
 
-- [ ] Every requirement in the approved design specification maps to at least one task above.
-- [ ] No task uses an unspecified placeholder behavior; unknown business facts use named configuration keys.
-- [ ] Interfaces use the same names and return shapes across tasks.
-- [ ] Static prerendering is tested independently of browser behavior.
-- [ ] Consent, referrals, analytics, accessibility, and reduced motion have focused tests.
-- [ ] The full suite and production build are run before completion claims.
+- [x] Every requirement in the approved design specification maps to at least one task above.
+- [x] No task uses an unspecified placeholder behavior; unknown business facts use named configuration keys.
+- [x] Interfaces use the same names and return shapes across tasks.
+- [x] Static prerendering is tested independently of browser behavior.
+- [x] Consent, referrals, analytics, accessibility, and reduced motion have focused tests.
+- [x] The full suite and production build are run before completion claims.

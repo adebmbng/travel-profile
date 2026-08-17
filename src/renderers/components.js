@@ -125,7 +125,7 @@ export function renderButton({ href, label, variant = 'primary', type = 'button'
 export function renderCardImage(asset, alt) {
   if (!asset) return '<div class="card-image card-image--placeholder" aria-hidden="true"></div>';
 
-  return `<img class="card-image" src="${escapeHtml(asset)}" alt="${escapeHtml(alt ?? '')}" loading="lazy" decoding="async">`;
+  return `<img class="card-image" src="${escapeHtml(asset)}" alt="${escapeHtml(alt ?? '')}" width="1200" height="900" loading="lazy" decoding="async">`;
 }
 
 export function renderHeroImage({ asset, mobileAsset, alt, className = 'hero__image' } = {}) {
@@ -135,7 +135,7 @@ export function renderHeroImage({ asset, mobileAsset, alt, className = 'hero__im
     ? `<source media="(max-width: 43rem)" srcset="${escapeHtml(mobileAsset)}">`
     : '';
 
-  return `<picture class="${escapeHtml(className)}">${mobileSource}<img src="${escapeHtml(asset)}" alt="${escapeHtml(alt ?? '')}" fetchpriority="high" decoding="async"></picture>`;
+  return `<picture class="${escapeHtml(className)}">${mobileSource}<img src="${escapeHtml(asset)}" alt="${escapeHtml(alt ?? '')}" width="1672" height="941" fetchpriority="high" decoding="async"></picture>`;
 }
 
 export function renderSectionHeading({ eyebrow, title, description, level = 2 } = {}) {

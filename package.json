@@ -5,11 +5,14 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && node scripts/prerender.mjs && node scripts/verify-static-routes.mjs",
+    "build": "vite build && node scripts/prerender.mjs && node scripts/verify-static-routes.mjs && node scripts/check-assets.mjs && node scripts/check-routes.mjs",
     "preview": "vite preview",
     "test": "vitest",
     "test:watch": "vitest --watch",
-    "verify:routes": "node scripts/verify-static-routes.mjs"
+    "verify:routes": "node scripts/verify-static-routes.mjs",
+    "check:assets": "node scripts/check-assets.mjs",
+    "check:routes": "node scripts/check-routes.mjs",
+    "test:a11y": "vitest --run tests/accessibility-smoke.test.mjs"
   },
   "devDependencies": {
     "vite": "^7.0.0",

@@ -3,7 +3,7 @@ import { renderHome } from './home.js';
 import { renderHajjInformation, renderPilgrimageOverview, renderUmrahPackages, renderUmrahPreparation } from './pilgrimage.js';
 import { renderWorldwideOverview } from './worldwide.js';
 import { renderArticleDetail, renderDestinationDetail, renderDestinationDirectory, renderPackageDetail, renderPackageDirectory } from './catalog.js';
-import { renderArticleIndex, renderLocalPage } from './content-pages.js';
+import { renderAbout, renderArticleIndex, renderContact, renderCustomTrip, renderFaq, renderFamilyGroup, renderLocalPage, renderWhyRasuna } from './content-pages.js';
 import { renderTravelTools } from './travel-tools.js';
 import { renderLegalPage } from './legal.js';
 
@@ -51,6 +51,12 @@ export function renderRoute(route = {}) {
     'article-detail': renderArticleDetail,
     jakarta: renderLocalPage,
     bandung: renderLocalPage,
+    'custom-trip': renderCustomTrip,
+    'family-group': renderFamilyGroup,
+    about: renderAbout,
+    'why-rasuna': renderWhyRasuna,
+    faq: renderFaq,
+    contact: renderContact,
     'travel-tools': renderTravelTools,
     privacy: renderLegalPage,
     cookies: renderLegalPage,

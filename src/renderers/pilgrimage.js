@@ -1,6 +1,7 @@
 import { SITE_CONFIG } from '../site-data.js';
 import { escapeHtml } from '../lib/escape-html.js';
 import { routePath, renderCardImage, renderHeroImage, renderSectionHeading, renderWhatsAppLink } from './components.js';
+import { renderPackageDirectory } from './catalog.js';
 
 const COPY = Object.freeze({
   id: Object.freeze({ title: 'Haji & Umrah, dimulai dengan persiapan yang tenang', description: 'Panduan awal untuk keluarga yang ingin memahami langkah persiapan dan detail yang perlu dikonfirmasi.', overview: 'Jalur persiapan', umrah: 'Paket Umrah', preparation: 'Persiapan Umrah', hajj: 'Informasi Haji', note: 'Informasi dan layanan akan diperbarui setelah detail yang relevan terverifikasi.', hajjTitle: 'Informasi Haji', hajjText: 'Ruang informasi untuk memahami persiapan Haji dengan tenang. Kami tidak menampilkan kredensial atau kuota yang belum terverifikasi.', preparationTitle: 'Persiapan Umrah', preparationText: 'Susun pertanyaan, kebutuhan keluarga, dan detail yang ingin Anda konfirmasi sebelum perjalanan.' }),
@@ -19,8 +20,7 @@ export function renderPilgrimageOverview({ locale = 'id' } = {}) {
 }
 
 export function renderUmrahPackages({ locale = 'id' } = {}) {
-  const text = copy(locale);
-  return `<section class="page-intro container">${renderSectionHeading({ eyebrow: text.umrah, title: text.umrah, description: text.note, level: 1 })}${renderCardImage('/assets/generated/hero-umrah-master.png', text.umrah)}${renderWhatsAppLink({ locale, journey: text.umrah })}</section>`;
+  return renderPackageDirectory({ locale, pillar: 'pilgrimage' });
 }
 
 export function renderUmrahPreparation({ locale = 'id' } = {}) {

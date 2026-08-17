@@ -1,5 +1,6 @@
 import { canTrack, readConsent } from './consent.js';
 
+export const ATTRIBUTION_STORAGE_KEY = 'rasuna-attribution-v1';
 export const EVENT_CATEGORIES = Object.freeze({
   page_view: 'analytics',
   cta_click: 'analytics',
@@ -14,6 +15,7 @@ const ALLOWED_EVENT_KEYS = new Set([
   'period', 'budget', 'provider', 'category'
 ]);
 const seenPageEvents = new Set();
+const UTM_KEYS = Object.freeze(['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term']);
 
 function safeValue(value) {
   if (typeof value === 'boolean' || typeof value === 'number') return value;
@@ -21,6 +23,47 @@ function safeValue(value) {
 
   const clean = value.replace(/[\u0000-\u001f\u007f]/g, '').trim();
   return clean ? clean.slice(0, 120) : undefined;
+}
+
+function attributionValue(value) {
+  if (typeof value !== 'string' && typeof value !== 'number') return null;
+  const clean = String(value).replace(/[\u0000-\u001f\u007f]/g, '').trim().slice(0, 100);
+  return clean && !clean.includes('@') ? clean : null;
+}
+
+export function readAttribution(storage) {
+  if (!storage || typeof storage.getItem !== 'function') return {};
+
+  try {
+    const raw = storage.getItem(ATTRIBUTION_STORAGE_KEY);
+    const parsed = raw ? JSON.parse(raw) : {};
+    return UTM_KEYS.reduce((result, key) => {
+      const value = attributionValue(parsed?.[key]);
+      if (value) result[key] = value;
+      return result;
+    }, {});
+  } catch {
+    return {};
+  }
+}
+
+export function captureAttribution(search, storage, consent) {
+  if (!canTrack('marketing', consent) || !storage || typeof storage.setItem !== 'function') return {};
+
+  const query = new URLSearchParams(String(search ?? '').replace(/^\?/, '?'));
+  const attribution = UTM_KEYS.reduce((result, key) => {
+    const value = attributionValue(query.get(key));
+    if (value) result[key] = value;
+    return result;
+  }, {});
+  if (!Object.keys(attribution).length) return readAttribution(storage);
+
+  try {
+    storage.setItem(ATTRIBUTION_STORAGE_KEY, JSON.stringify(attribution));
+  } catch {
+    // Storage is optional; the page remains functional without attribution.
+  }
+  return attribution;
 }
 
 export function sanitizeEventParams(params = {}) {

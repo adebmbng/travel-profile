@@ -1,6 +1,6 @@
 import { expect, it } from 'vitest';
 import { renderHome } from './home.js';
-import { renderPilgrimageOverview } from './pilgrimage.js';
+import { renderPilgrimageOverview, renderUmrahPackages } from './pilgrimage.js';
 import { renderWorldwideOverview } from './worldwide.js';
 import { recommendJourney } from './journey-finder.js';
 import { resolveRoute } from '../lib/route-utils.js';
@@ -18,6 +18,10 @@ it('renders equal flagship journeys and a certification-first trust slot', () =>
 it('renders calm pilgrimage and exploratory worldwide imagery', () => {
   expect(renderPilgrimageOverview({ locale: 'id' })).toContain('hero-umrah-master.png');
   expect(renderWorldwideOverview({ locale: 'en' })).toContain('hero-worldwide-master.png');
+});
+
+it('renders the Umrah package route as a package directory', () => {
+  expect(renderUmrahPackages({ locale: 'id' })).toContain('family-umrah-guidance');
 });
 
 it('recommends a static family package without claiming live inventory', () => {

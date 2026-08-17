@@ -1,5 +1,5 @@
 import { canTrack, hasStoredConsent, readConsent, writeConsent } from './lib/consent.js';
-import { trackEvent } from './lib/analytics.js';
+import { captureAttribution, readAttribution, trackEvent } from './lib/analytics.js';
 import { buildReferralLink } from './lib/referrals.js';
 import { SITE_CONFIG, REFERRAL_PROVIDERS } from './site-data.js';
 import { recommendJourney, renderJourneyRecommendation } from './renderers/journey-finder.js';
@@ -87,18 +87,33 @@ export function loadTrackingScripts(root, consent = readConsent(root.defaultView
 
   if (canTrack('analytics', consent)) {
     view.dataLayer = view.dataLayer || [];
+    view.gtag = view.gtag || ((...args) => view.dataLayer.push(args));
+    view.gtag('js', new Date());
     if (isConfigured(SITE_CONFIG.GTM_CONTAINER_ID)) {
+      view.dataLayer.push({ 'gtm.start': Date.now(), event: 'gtm.js' });
       appendScript(root, `https://www.googletagmanager.com/gtm.js?id=${encodeURIComponent(SITE_CONFIG.GTM_CONTAINER_ID)}`);
     }
     if (isConfigured(SITE_CONFIG.GA4_MEASUREMENT_ID)) {
-      view.dataLayer.push(['js', new Date()]);
-      view.dataLayer.push(['config', SITE_CONFIG.GA4_MEASUREMENT_ID]);
+      view.gtag('config', SITE_CONFIG.GA4_MEASUREMENT_ID);
       appendScript(root, `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(SITE_CONFIG.GA4_MEASUREMENT_ID)}`);
     }
   }
 
-  if (canTrack('marketing', consent) && isConfigured(SITE_CONFIG.META_PIXEL_ID)) {
-    appendScript(root, `https://connect.facebook.net/en_US/fbevents.js`, { 'data-meta-pixel': SITE_CONFIG.META_PIXEL_ID });
+  if (canTrack('marketing', consent)) {
+    view.dataLayer = view.dataLayer || [];
+    if (isConfigured(SITE_CONFIG.GOOGLE_ADS_CONVERSION_ID)) {
+      view.gtag = view.gtag || ((...args) => view.dataLayer.push(args));
+      view.gtag('config', SITE_CONFIG.GOOGLE_ADS_CONVERSION_ID);
+      if (!isConfigured(SITE_CONFIG.GA4_MEASUREMENT_ID)) {
+        appendScript(root, `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(SITE_CONFIG.GOOGLE_ADS_CONVERSION_ID)}`);
+      }
+    }
+    if (isConfigured(SITE_CONFIG.META_PIXEL_ID)) {
+      view.fbq = view.fbq || ((...args) => (view.fbq.queue ??= []).push(args));
+      view.fbq('init', SITE_CONFIG.META_PIXEL_ID);
+      view.fbq('track', 'PageView');
+      appendScript(root, `https://connect.facebook.net/en_US/fbevents.js`, { 'data-meta-pixel': SITE_CONFIG.META_PIXEL_ID });
+    }
   }
 }
 
@@ -139,6 +154,19 @@ function setupMenu(root) {
     if (event.key === 'Escape' && menuButton.getAttribute('aria-expanded') === 'true') {
       event.preventDefault();
       close({ restoreFocus: true });
+      return;
+    }
+    if (event.key !== 'Tab' || menuButton.getAttribute('aria-expanded') !== 'true') return;
+    const current = focusableElements(navigation);
+    if (!current.length) return;
+    const first = current[0];
+    const last = current[current.length - 1];
+    if (event.shiftKey && root.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && root.activeElement === last) {
+      event.preventDefault();
+      first.focus();
     }
   });
 
@@ -224,7 +252,12 @@ function setupReferrals(root) {
       const provider = REFERRAL_PROVIDERS.find((item) => item.id === link.dataset.referralProvider);
       const view = root.defaultView;
       const query = new URLSearchParams(view?.location?.search ?? '');
-      const context = Object.fromEntries(['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'].map((key) => [key, query.get(key) ?? '']));
+      const currentAttribution = {};
+      ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'].forEach((key) => {
+        const value = query.get(key);
+        if (value) currentAttribution[key] = value;
+      });
+      const context = { ...readAttribution(view?.localStorage), ...currentAttribution };
       const safeUrl = buildReferralLink(provider, context);
       if (!safeUrl) {
         event.preventDefault();
@@ -243,16 +276,17 @@ function setupReferrals(root) {
 function focusDialog(dialog) {
   const elements = focusableElements(dialog);
   elements[0]?.focus();
+  const ownerDocument = dialog.ownerDocument;
   dialog.addEventListener('keydown', (event) => {
     if (event.key !== 'Tab') return;
     const current = focusableElements(dialog);
     if (!current.length) return;
     const first = current[0];
     const last = current[current.length - 1];
-    if (event.shiftKey && document.activeElement === first) {
+    if (event.shiftKey && ownerDocument.activeElement === first) {
       event.preventDefault();
       last.focus();
-    } else if (!event.shiftKey && document.activeElement === last) {
+    } else if (!event.shiftKey && ownerDocument.activeElement === last) {
       event.preventDefault();
       first.focus();
     }
@@ -282,6 +316,7 @@ function setupConsent(root) {
 
   const complete = (value) => {
     const consent = writeConsent(storage, value);
+    captureAttribution(view?.location?.search, storage, consent);
     loadTrackingScripts(root, consent);
     removeLayer();
     addSettingsButton();
@@ -314,7 +349,9 @@ function setupConsent(root) {
   };
 
   if (hasStoredConsent(storage)) {
-    loadTrackingScripts(root, readConsent(storage));
+    const consent = readConsent(storage);
+    captureAttribution(view?.location?.search, storage, consent);
+    loadTrackingScripts(root, consent);
     addSettingsButton();
     trackEvent('page_view', { path: view?.location?.pathname, locale: root.documentElement.lang }, trackingDependencies(root));
   } else {
@@ -327,6 +364,7 @@ export function initInteractions(root = document) {
 
   root.documentElement.dataset.clientInitialized = 'true';
   root.documentElement.classList.add('js');
+  root.body?.classList.add('page-transition-ready');
   setupMenu(root);
   setupLanguageLinks(root);
   setupMotion(root);
