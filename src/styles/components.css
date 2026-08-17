@@ -78,6 +78,28 @@
 .final-cta h2, .final-cta p { max-width: 42rem; }
 .calm-section { display: grid; gap: var(--space-6); }
 .path-links { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-block: var(--space-4); }
+.hero--catalog { background: linear-gradient(135deg, var(--color-sand), var(--color-ivory)); }
+.catalog-card .price-label { margin: 0; color: var(--color-emerald-800); font-weight: 700; }
+.price-label--hero { font-size: var(--text-lg); }
+.guidance-grid { display: grid; gap: var(--space-4); }
+.related-content { display: grid; gap: var(--space-4); margin-top: var(--space-6); padding: var(--space-5); background: var(--color-sand); border-radius: var(--radius-md); }
+.related-content h2, .related-content h3 { margin: 0; }
+.related-content ul { display: grid; gap: var(--space-2); padding-left: 1.25rem; }
+.sticky-consultation { position: sticky; bottom: var(--space-3); display: flex; justify-content: end; pointer-events: none; }
+.sticky-consultation .button { pointer-events: auto; box-shadow: var(--shadow-md); }
+.article-page__body, .local-page__grid, .travel-tools__grid { display: grid; gap: var(--space-5); }
+.article-page__body > section { max-width: 46rem; }
+.metadata-list { display: grid; grid-template-columns: max-content 1fr; gap: var(--space-2) var(--space-3); margin: 0; font-size: var(--text-sm); }
+.metadata-list dt { font-weight: 700; }
+.metadata-list dd { margin: 0; overflow-wrap: anywhere; }
+.referral-card { grid-template-columns: minmax(0, 1fr); }
+.external-warning { padding: var(--space-3); color: var(--color-emerald-950); background: var(--color-sky); border-left: .25rem solid var(--color-emerald-700); border-radius: var(--radius-sm); font-size: var(--text-sm); }
+.travel-tools__fallback { align-content: start; }
+.future-tool { display: grid; gap: var(--space-3); min-height: 12rem; padding: var(--space-4); color: var(--color-muted-ink); background: var(--color-sand); border: 1px dashed var(--color-border); border-radius: var(--radius-md); }
+.future-tool h3 { margin: 0; color: var(--color-ink); }
+.future-tool span { font-weight: 700; }
+.future-tool button[disabled] { justify-self: start; min-height: 2.5rem; padding-inline: .875rem; color: inherit; background: transparent; border: 1px solid currentColor; border-radius: 999px; cursor: not-allowed; }
+.legal-page { min-height: 38vh; }
 
 @media (min-width: 56rem) {
   .js .menu-toggle { display: none; }
@@ -90,6 +112,9 @@
   .content-grid--three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .content-grid--four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .story-panels__grid, .home-split, .calm-section { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .guidance-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .article-page__body, .local-page__grid, .travel-tools__grid { grid-template-columns: minmax(0, 1.25fr) minmax(16rem, .75fr); align-items: start; }
+  .referral-card { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); }
   .journey-finder__form { grid-template-columns: 1.2fr repeat(3, 1fr) auto; align-items: end; }
   .journey-finder__form fieldset { display: grid; }
   .local-block .container, .final-cta .container { grid-template-columns: 1fr auto; }

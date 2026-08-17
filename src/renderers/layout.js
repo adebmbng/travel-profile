@@ -2,6 +2,10 @@ import { renderHeader, renderFooter, renderSectionHeading, renderWhatsAppLink } 
 import { renderHome } from './home.js';
 import { renderHajjInformation, renderPilgrimageOverview, renderUmrahPackages, renderUmrahPreparation } from './pilgrimage.js';
 import { renderWorldwideOverview } from './worldwide.js';
+import { renderArticleDetail, renderDestinationDetail, renderDestinationDirectory, renderPackageDetail, renderPackageDirectory } from './catalog.js';
+import { renderArticleIndex, renderLocalPage } from './content-pages.js';
+import { renderTravelTools } from './travel-tools.js';
+import { renderLegalPage } from './legal.js';
 
 const PAGE_COPY = Object.freeze({
   id: Object.freeze({
@@ -38,8 +42,29 @@ export function renderRoute(route = {}) {
     'hajj-information': renderHajjInformation,
     'worldwide-overview': renderWorldwideOverview
   };
-  const renderer = flagshipRenderers[route.key];
-  if (renderer) return renderer({ locale, ...route.params });
+  const catalogRenderers = {
+    packages: renderPackageDirectory,
+    'package-detail': renderPackageDetail,
+    destinations: renderDestinationDirectory,
+    'destination-detail': renderDestinationDetail,
+    articles: renderArticleIndex,
+    'article-detail': renderArticleDetail,
+    jakarta: renderLocalPage,
+    bandung: renderLocalPage,
+    'travel-tools': renderTravelTools,
+    privacy: renderLegalPage,
+    cookies: renderLegalPage,
+    'affiliate-disclosure': renderLegalPage,
+    terms: renderLegalPage,
+    accessibility: renderLegalPage
+  };
+  const renderer = flagshipRenderers[route.key] ?? catalogRenderers[route.key];
+  if (renderer) {
+    const params = route.key === 'jakarta' || route.key === 'bandung'
+      ? { locale, city: route.key, ...route.params }
+      : { locale, key: route.key, ...route.params };
+    return renderer(params);
+  }
   const text = textFor(locale);
   const isNotFound = route.key === 'not-found';
   const title = isNotFound ? text.notFoundTitle : route.key === 'home' ? text.homeTitle : text.homeTitle;

@@ -20,6 +20,12 @@ export const SITE_CONFIG = Object.freeze({
   BANDUNG_VERIFIED_SERVICE_DETAILS: 'BANDUNG_VERIFIED_SERVICE_DETAILS',
   VERIFIED_TESTIMONIALS: 'VERIFIED_TESTIMONIALS',
   PACKAGE_FAMILY_LAKE_ESCAPE_STARTING_PRICE: 'PACKAGE_FAMILY_LAKE_ESCAPE_STARTING_PRICE',
+  ARTICLE_FAMILY_TRAVEL_PLANNING_AUTHOR: 'ARTICLE_FAMILY_TRAVEL_PLANNING_AUTHOR',
+  ARTICLE_FAMILY_TRAVEL_PLANNING_REVIEWER: 'ARTICLE_FAMILY_TRAVEL_PLANNING_REVIEWER',
+  ARTICLE_FAMILY_TRAVEL_PLANNING_PUBLISHED_DATE: 'ARTICLE_FAMILY_TRAVEL_PLANNING_PUBLISHED_DATE',
+  ARTICLE_FAMILY_TRAVEL_PLANNING_REVIEW_DATE: 'ARTICLE_FAMILY_TRAVEL_PLANNING_REVIEW_DATE',
+  ARTICLE_FAMILY_TRAVEL_PLANNING_READING_TIME: 'ARTICLE_FAMILY_TRAVEL_PLANNING_READING_TIME',
+  ARTICLE_FAMILY_TRAVEL_PLANNING_SOURCE_LINKS: 'ARTICLE_FAMILY_TRAVEL_PLANNING_SOURCE_LINKS',
   WELCOME_PICKUPS_PROVIDER: 'Welcome Pickups',
   TRAVELPAYOUTS_MARKER: '641087',
   TRAVELPAYOUTS_CAMPAIGN_ID: '627',
@@ -53,7 +59,9 @@ export const ROUTE_LABELS = Object.freeze({
   'hajj-information': Object.freeze({ id: 'Informasi Haji', en: 'Hajj Information' }),
   'worldwide-overview': Object.freeze({ id: 'Wisata Dunia', en: 'Worldwide Travel' }),
   destinations: Object.freeze({ id: 'Destinasi', en: 'Destinations' }),
+  'destination-detail': Object.freeze({ id: 'Detail destinasi', en: 'Destination details' }),
   packages: Object.freeze({ id: 'Paket', en: 'Packages' }),
+  'package-detail': Object.freeze({ id: 'Detail paket', en: 'Package details' }),
   'custom-trip': Object.freeze({ id: 'Perjalanan Kustom', en: 'Custom Trip' }),
   'family-group': Object.freeze({ id: 'Keluarga & Grup', en: 'Family & Group' }),
   'travel-tools': Object.freeze({ id: 'Travel Tools', en: 'Travel Tools' }),
@@ -62,6 +70,7 @@ export const ROUTE_LABELS = Object.freeze({
   jakarta: Object.freeze({ id: 'Jakarta', en: 'Jakarta' }),
   bandung: Object.freeze({ id: 'Bandung', en: 'Bandung' }),
   articles: Object.freeze({ id: 'Artikel', en: 'Articles' }),
+  'article-detail': Object.freeze({ id: 'Detail artikel', en: 'Article details' }),
   faq: Object.freeze({ id: 'Pertanyaan Umum', en: 'Frequently Asked Questions' }),
   contact: Object.freeze({ id: 'Kontak', en: 'Contact' }),
   privacy: Object.freeze({ id: 'Privasi', en: 'Privacy' }),
@@ -128,9 +137,11 @@ export const PACKAGES = Object.freeze([
 
 export const DESTINATIONS = Object.freeze([
   Object.freeze({
-    slug: 'japan',
+    slug: 'japan-family',
     labels: Object.freeze({ id: 'Jepang', en: 'Japan' }),
-    image: asset('destination-japan.png')
+    image: asset('destination-japan.png'),
+    relatedPackageSlugs: Object.freeze(['family-lake-escape']),
+    relatedArticleSlugs: Object.freeze(['family-travel-planning'])
   }),
   Object.freeze({
     slug: 'turkiye',
@@ -149,7 +160,29 @@ export const ARTICLES = Object.freeze([
   Object.freeze({
     slug: 'family-travel-planning',
     labels: Object.freeze({ id: 'Merencanakan Perjalanan Keluarga', en: 'Planning Family Travel' }),
-    image: asset('article-family-travel-planning.png')
+    image: asset('article-family-travel-planning.png'),
+    metadata: Object.freeze({
+      author: SITE_CONFIG.ARTICLE_FAMILY_TRAVEL_PLANNING_AUTHOR,
+      reviewer: SITE_CONFIG.ARTICLE_FAMILY_TRAVEL_PLANNING_REVIEWER,
+      publishedDate: SITE_CONFIG.ARTICLE_FAMILY_TRAVEL_PLANNING_PUBLISHED_DATE,
+      reviewDate: SITE_CONFIG.ARTICLE_FAMILY_TRAVEL_PLANNING_REVIEW_DATE,
+      readingTime: SITE_CONFIG.ARTICLE_FAMILY_TRAVEL_PLANNING_READING_TIME,
+      sourceLinks: SITE_CONFIG.ARTICLE_FAMILY_TRAVEL_PLANNING_SOURCE_LINKS
+    }),
+    relatedPackageSlugs: Object.freeze(['family-lake-escape'])
+  })
+]);
+
+export const REFERRAL_PROVIDERS = Object.freeze([
+  Object.freeze({
+    id: 'welcome-pickups',
+    name: SITE_CONFIG.WELCOME_PICKUPS_PROVIDER,
+    network: 'Travelpayouts',
+    category: 'airport-transfer',
+    marker: SITE_CONFIG.TRAVELPAYOUTS_MARKER,
+    campaignId: SITE_CONFIG.TRAVELPAYOUTS_CAMPAIGN_ID,
+    promoId: SITE_CONFIG.TRAVELPAYOUTS_PROMO_ID,
+    externalUrl: `https://www.welcomepickups.com/?marker=${SITE_CONFIG.TRAVELPAYOUTS_MARKER}&campaign=${SITE_CONFIG.TRAVELPAYOUTS_CAMPAIGN_ID}&promo=${SITE_CONFIG.TRAVELPAYOUTS_PROMO_ID}`
   })
 ]);
 
