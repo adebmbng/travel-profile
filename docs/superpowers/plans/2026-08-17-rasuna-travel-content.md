@@ -8,6 +8,8 @@
 
 **Tech Stack:** Vite 7, vanilla JavaScript ESM, CSS, Vitest, Node static prerendering, existing generated PNG assets.
 
+**Execution status:** Complete. The data, renderer, page-content, documentation, full-test, build, static-route, asset, and accessibility checks described below were executed on 2026-08-17.
+
 ## Global Constraints
 
 - Indonesian remains the default locale and English remains under equivalent `/en/` routes.

@@ -45,9 +45,22 @@ Unknown business facts intentionally remain named configuration fields in `src/s
 - `JAKARTA_VERIFIED_SERVICE_DETAILS`, `BANDUNG_VERIFIED_SERVICE_DETAILS`
 - `VERIFIED_TESTIMONIALS`
 - article author, reviewer, dates, reading time, and source-link fields
-- approved package prices and any referral expiry/status values
+- current package benchmark prices and any referral expiry/status values
 
-Do not replace a placeholder with an assumption. Verify certifications, religious and regulatory information, prices, schedules, local service claims, testimonials, and partner relationships before changing the data.
+Package cards currently show dated market benchmarks per person to help visitors plan. They are not Rasuna Travel offers or final quotations; verify and replace them with approved package pricing before publishing a live offer. Verify certifications, religious and regulatory information, prices, schedules, local service claims, testimonials, and partner relationships before changing the data.
+
+### Current package benchmark prices
+
+The four package records in `src/site-data.js` currently use these August 2026 planning benchmarks:
+
+| Package | Benchmark |
+| --- | ---: |
+| Family Lake Escape | Rp19.990.000/person |
+| Coastal Couple Journey | Rp2.350.000/person |
+| Mountain Rail Discovery | Rp28.900.000/person |
+| Family Umrah Guidance | Rp28.750.000/person |
+
+Each package detail page states the benchmark basis and links to a market reference. Dates, exchange rates, inclusions, and availability can change; destination pages intentionally remain price-free inspiration pages.
 
 ## Routes and redirects
 

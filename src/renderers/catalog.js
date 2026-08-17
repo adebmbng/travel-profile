@@ -34,7 +34,7 @@ export function renderPackagePrice(item, locale = 'id') {
   const text = copy(locale);
   if (!hasStartingBenchmark(item)) return `<p class="price-label">${escapeHtml(text.consultPrice)}</p>`;
   const price = formatStartingPrice(item.pricing.value, locale);
-  return `<div class="price-block"><p class="price-label"><span>${escapeHtml(text.from)}</span> <strong>${escapeHtml(price)}</strong> <span>/${escapeHtml(text.unit)}</span></p><p class="price-note">${escapeHtml(text.priceNote)}</p><p class="configuration-note">${escapeHtml(text.benchmark)} · ${escapeHtml(item.pricing.benchmarkDate)} · ${escapeHtml(text.finalPriceNote)}</p></div>`;
+  return `<div class="price-block"><p class="price-label"><span>${escapeHtml(text.from)}</span> <strong>${escapeHtml(price)}</strong> <span>${escapeHtml(text.unit)}</span></p><p class="price-note">${escapeHtml(text.priceNote)}</p><p class="configuration-note">${escapeHtml(text.benchmark)} · ${escapeHtml(item.pricing.benchmarkDate)} · ${escapeHtml(text.finalPriceNote)}</p></div>`;
 }
 
 function packageCard(item, locale) {
