@@ -45,6 +45,46 @@ export const JOURNEY_PILLARS = Object.freeze([
   })
 ]);
 
+export const ROUTE_LABELS = Object.freeze({
+  home: Object.freeze({ id: 'Beranda', en: 'Home' }),
+  'pilgrimage-overview': Object.freeze({ id: 'Haji & Umrah', en: 'Hajj & Umrah' }),
+  'umrah-packages': Object.freeze({ id: 'Paket Umrah', en: 'Umrah Packages' }),
+  'umrah-preparation': Object.freeze({ id: 'Persiapan Umrah', en: 'Umrah Preparation' }),
+  'hajj-information': Object.freeze({ id: 'Informasi Haji', en: 'Hajj Information' }),
+  'worldwide-overview': Object.freeze({ id: 'Wisata Dunia', en: 'Worldwide Travel' }),
+  destinations: Object.freeze({ id: 'Destinasi', en: 'Destinations' }),
+  packages: Object.freeze({ id: 'Paket', en: 'Packages' }),
+  'custom-trip': Object.freeze({ id: 'Perjalanan Kustom', en: 'Custom Trip' }),
+  'family-group': Object.freeze({ id: 'Keluarga & Grup', en: 'Family & Group' }),
+  'travel-tools': Object.freeze({ id: 'Travel Tools', en: 'Travel Tools' }),
+  about: Object.freeze({ id: 'Tentang Rasuna', en: 'About Rasuna' }),
+  'why-rasuna': Object.freeze({ id: 'Mengapa Rasuna', en: 'Why Rasuna' }),
+  jakarta: Object.freeze({ id: 'Jakarta', en: 'Jakarta' }),
+  bandung: Object.freeze({ id: 'Bandung', en: 'Bandung' }),
+  articles: Object.freeze({ id: 'Artikel', en: 'Articles' }),
+  faq: Object.freeze({ id: 'Pertanyaan Umum', en: 'Frequently Asked Questions' }),
+  contact: Object.freeze({ id: 'Kontak', en: 'Contact' }),
+  privacy: Object.freeze({ id: 'Privasi', en: 'Privacy' }),
+  cookies: Object.freeze({ id: 'Cookie', en: 'Cookies' }),
+  'affiliate-disclosure': Object.freeze({ id: 'Pengungkapan Afiliasi', en: 'Affiliate Disclosure' }),
+  terms: Object.freeze({ id: 'Syarat', en: 'Terms' }),
+  accessibility: Object.freeze({ id: 'Aksesibilitas', en: 'Accessibility' }),
+  'not-found': Object.freeze({ id: 'Halaman tidak ditemukan', en: 'Page not found' })
+});
+
+export const NAVIGATION_GROUPS = Object.freeze([
+  Object.freeze({
+    id: 'pilgrimage',
+    label: Object.freeze({ id: 'Haji & Umrah', en: 'Hajj & Umrah' }),
+    routes: Object.freeze(['pilgrimage-overview', 'umrah-packages', 'umrah-preparation', 'hajj-information'])
+  }),
+  Object.freeze({
+    id: 'worldwide',
+    label: Object.freeze({ id: 'Wisata Dunia', en: 'Worldwide Travel' }),
+    routes: Object.freeze(['worldwide-overview', 'destinations', 'packages', 'custom-trip', 'family-group'])
+  })
+]);
+
 export const PACKAGES = Object.freeze([
   Object.freeze({
     slug: 'family-lake-escape',
