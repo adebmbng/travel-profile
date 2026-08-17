@@ -14,6 +14,8 @@
 .site-nav a[aria-current='page'] { color: var(--color-emerald-700); font-weight: 700; }
 .site-nav__actions, .page-intro__actions { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center; }
 .language-switcher { font-size: var(--text-sm); font-weight: 700; }
+.whatsapp-cta { display: inline-grid; gap: .25rem; justify-items: start; }
+.whatsapp-cta--pending .configuration-note { max-width: 15rem; margin: 0; }
 .button { display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: .625rem 1rem; border: 1px solid transparent; border-radius: 999px; font-weight: 700; line-height: 1.2; text-align: center; text-decoration: none; transition: transform var(--motion-fast) var(--motion-ease), background-color var(--motion-fast) var(--motion-ease); }
 .button:hover { transform: translateY(-1px); color: inherit; }
 .button--primary, .button--whatsapp { color: #fff; background: var(--color-emerald-800); }
@@ -40,6 +42,7 @@
 .trust-ribbon .container { display: grid; gap: var(--space-2); padding-block: var(--space-3); font-size: var(--text-sm); }
 .trust-ribbon p { margin: 0; color: #d5e8e3; }
 .hero { position: relative; overflow: clip; background: var(--color-sand); }
+.hero--home::after { position: absolute; right: 7%; bottom: 9%; left: 7%; height: 2px; pointer-events: none; content: ''; background: repeating-linear-gradient(90deg, var(--color-gold) 0 1.5rem, transparent 1.5rem 2.25rem); opacity: .65; transform-origin: left center; animation: rasuna-route-line 1.2s var(--motion-ease) both; }
 .hero__content { display: grid; gap: var(--space-5); align-items: center; padding-block: var(--space-7); }
 .hero__content > div { position: relative; z-index: 1; }
 .hero__image { display: block; overflow: hidden; min-height: 17rem; border-radius: var(--radius-lg); box-shadow: var(--shadow-md); }
@@ -100,6 +103,24 @@
 .future-tool span { font-weight: 700; }
 .future-tool button[disabled] { justify-self: start; min-height: 2.5rem; padding-inline: .875rem; color: inherit; background: transparent; border: 1px solid currentColor; border-radius: 999px; cursor: not-allowed; }
 .legal-page { min-height: 38vh; }
+.consent-layer { position: fixed; z-index: 1000; inset: 0; display: grid; align-items: end; padding: var(--space-3); background: rgb(6 61 55 / .42); }
+.consent-panel { display: grid; gap: var(--space-4); width: min(100%, 48rem); padding: var(--space-5); margin-inline: auto; color: var(--color-forest-ink); background: var(--color-ivory); border: 1px solid var(--color-border); border-radius: var(--radius-lg); box-shadow: var(--shadow-md); }
+.consent-panel h2, .consent-panel p { margin: 0; }
+.consent-actions { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center; }
+.consent-link, .consent-settings { min-height: 2.75rem; padding: .625rem .875rem; color: var(--color-emerald-950); background: transparent; border: 1px solid var(--color-border); border-radius: 999px; font-weight: 700; }
+.consent-preferences { display: grid; gap: var(--space-3); padding: var(--space-4); margin: 0; border: 1px solid var(--color-border); border-radius: var(--radius-md); }
+.consent-preferences legend { padding-inline: var(--space-2); font-weight: 700; }
+.consent-preferences label { display: flex; gap: var(--space-2); align-items: center; }
+.consent-preferences p { color: var(--color-muted-ink); font-size: var(--text-sm); }
+.consent-settings { position: fixed; z-index: 100; right: var(--space-3); bottom: var(--space-3); box-shadow: var(--shadow-sm); }
+
+@keyframes rasuna-route-line {
+  from { clip-path: inset(0 100% 0 0); }
+  to { clip-path: inset(0); }
+}
+
+[data-reduced-motion] .hero--home::after { animation: none; }
+[data-reduced-motion] .button:hover { transform: none; }
 
 @media (min-width: 56rem) {
   .js .menu-toggle { display: none; }
@@ -118,4 +139,9 @@
   .journey-finder__form { grid-template-columns: 1.2fr repeat(3, 1fr) auto; align-items: end; }
   .journey-finder__form fieldset { display: grid; }
   .local-block .container, .final-cta .container { grid-template-columns: 1fr auto; }
+}
+
+@media (max-width: 35rem) {
+  .consent-actions { align-items: stretch; }
+  .consent-actions .button, .consent-link { width: 100%; }
 }

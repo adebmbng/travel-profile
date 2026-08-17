@@ -1,6 +1,7 @@
 import { NAVIGATION_GROUPS, ROUTE_LABELS, SITE_CONFIG, SUPPORTED_ROUTES } from '../site-data.js';
 import { escapeHtml } from '../lib/escape-html.js';
 import { localizedPath } from '../lib/route-utils.js';
+import { buildWhatsAppUrl } from '../lib/whatsapp.js';
 
 const COPY = Object.freeze({
   id: Object.freeze({
@@ -15,7 +16,8 @@ const COPY = Object.freeze({
     navigation: 'Navigasi utama',
     legal: 'Informasi legal',
     local: 'Halaman lokal',
-    reading: 'Bacaan perjalanan'
+    reading: 'Bacaan perjalanan',
+    contactFallback: 'Buka halaman kontak'
   }),
   en: Object.freeze({
     menu: 'Open menu',
@@ -29,7 +31,8 @@ const COPY = Object.freeze({
     navigation: 'Primary navigation',
     legal: 'Legal information',
     local: 'Local pages',
-    reading: 'Travel reading'
+    reading: 'Travel reading',
+    contactFallback: 'Open contact page'
   })
 });
 
@@ -55,10 +58,6 @@ function routePath(locale, key, params = {}) {
   return localizedPath(locale, path);
 }
 
-function isConfigured(value) {
-  return Boolean(value) && !String(value).startsWith('PRIMARY_') && !String(value).endsWith('_ID');
-}
-
 function navigationLink(locale, key, currentKey) {
   const current = key === currentKey ? ' aria-current="page"' : '';
   return `<a href="${escapeHtml(routePath(locale, key))}"${current}>${escapeHtml(labelFor(key, locale))}</a>`;
@@ -77,17 +76,19 @@ export function renderWhatsAppLink(context = {}) {
   const locale = context.locale === 'en' ? 'en' : 'id';
   const journey = context.journey ? String(context.journey) : '';
   const packageName = context.packageName ? String(context.packageName) : '';
-  const subject = packageName || journey;
-  const message = locale === 'en'
-    ? `Hello Rasuna Travel, I would like to discuss ${subject || 'a travel plan'}.`
-    : `Halo Rasuna Travel, saya ingin berdiskusi tentang ${subject || 'rencana perjalanan'}.`;
-  const configuredNumber = isConfigured(SITE_CONFIG.PRIMARY_WHATSAPP_NUMBER)
-    ? String(SITE_CONFIG.PRIMARY_WHATSAPP_NUMBER).replace(/\D/g, '')
-    : '';
-  const href = `https://wa.me/${configuredNumber}?text=${encodeURIComponent(message)}`;
-  const pending = configuredNumber ? '' : ' data-configuration-pending="true"';
+  const href = buildWhatsAppUrl({
+    number: SITE_CONFIG.PRIMARY_WHATSAPP_NUMBER,
+    locale,
+    journey,
+    packageName,
+    pagePath: context.pagePath
+  });
 
-  return `<a class="button button--whatsapp" data-cta="whatsapp"${pending} href="${escapeHtml(href)}" target="_blank" rel="noopener noreferrer">${escapeHtml(copy(locale).consult)}</a>`;
+  if (!href) {
+    return `<span class="whatsapp-cta whatsapp-cta--pending"><a class="button button--whatsapp" data-cta="whatsapp" data-configuration-pending="true" href="${escapeHtml(routePath(locale, 'contact'))}">${escapeHtml(copy(locale).consult)}</a><span class="configuration-note">${escapeHtml(copy(locale).contactFallback)}</span></span>`;
+  }
+
+  return `<a class="button button--whatsapp" data-cta="whatsapp" href="${escapeHtml(href)}" target="_blank" rel="noopener noreferrer">${escapeHtml(copy(locale).consult)}</a>`;
 }
 
 const BUTTON_ATTRIBUTE_NAMES = new Set([

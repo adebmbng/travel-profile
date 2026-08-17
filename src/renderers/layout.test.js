@@ -19,9 +19,17 @@ describe('shared page shell', () => {
   it('renders a contextual WhatsApp link without exposing private form data', () => {
     const html = renderWhatsAppLink({ locale: 'id', journey: 'umrah', packageName: 'Paket Keluarga' });
 
-    expect(html).toContain('wa.me');
-    expect(html).toContain('Paket%20Keluarga');
+    expect(html).toContain('data-configuration-pending="true"');
+    expect(html).toContain('/id/kontak/');
     expect(html).not.toContain('email');
+  });
+
+  it('falls back to Contact when the WhatsApp number is not configured', () => {
+    const html = renderWhatsAppLink({ locale: 'id', journey: 'umrah' });
+
+    expect(html).toContain('data-configuration-pending="true"');
+    expect(html).toContain('/id/kontak/');
+    expect(html).not.toContain('wa.me/');
   });
 
   it('renders document metadata and a no-JavaScript fallback', () => {

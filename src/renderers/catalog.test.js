@@ -22,6 +22,7 @@ it('discloses the current referral and keeps future categories visibly unassigne
   expect(html).toContain('Welcome Pickups');
   expect(html).toContain('Travelpayouts');
   expect(html).toContain('affiliate');
+  expect(html).toContain('rel="sponsored nofollow noopener noreferrer"');
   expect(html).toContain('Segera hadir');
 });
 

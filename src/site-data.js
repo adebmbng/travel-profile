@@ -179,6 +179,8 @@ export const REFERRAL_PROVIDERS = Object.freeze([
     name: SITE_CONFIG.WELCOME_PICKUPS_PROVIDER,
     network: 'Travelpayouts',
     category: 'airport-transfer',
+    status: 'active',
+    expiresAt: null,
     marker: SITE_CONFIG.TRAVELPAYOUTS_MARKER,
     campaignId: SITE_CONFIG.TRAVELPAYOUTS_CAMPAIGN_ID,
     promoId: SITE_CONFIG.TRAVELPAYOUTS_PROMO_ID,
