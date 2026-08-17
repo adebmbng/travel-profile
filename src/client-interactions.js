@@ -12,7 +12,6 @@ const COPY = Object.freeze({
     reject: 'Tolak pengukuran',
     customize: 'Atur pilihan',
     save: 'Simpan pilihan',
-    settings: 'Pengaturan privasi',
     analytics: 'Pengukuran anonim',
     marketing: 'Pemasaran dan atribusi',
     necessary: 'Diperlukan agar situs berfungsi.'
@@ -24,7 +23,6 @@ const COPY = Object.freeze({
     reject: 'Reject measurement',
     customize: 'Customize choices',
     save: 'Save choices',
-    settings: 'Privacy settings',
     analytics: 'Anonymous measurement',
     marketing: 'Marketing and attribution',
     necessary: 'Required for the site to work.'
@@ -296,32 +294,14 @@ function focusDialog(dialog) {
 function setupConsent(root) {
   const view = root.defaultView;
   const storage = view?.localStorage;
-  let returnFocus = null;
 
   const removeLayer = () => root.querySelector('[data-consent-layer]')?.remove();
-  const addSettingsButton = () => {
-    if (root.querySelector('[data-consent-settings]')) return;
-    const locale = root.documentElement.lang === 'en' ? 'en' : 'id';
-    const button = root.createElement('button');
-    button.className = 'consent-settings';
-    button.type = 'button';
-    button.dataset.consentSettings = 'true';
-    button.textContent = copy(locale).settings;
-    button.addEventListener('click', () => {
-      returnFocus = button;
-      showPanel(true);
-    });
-    root.body.appendChild(button);
-  };
 
   const complete = (value) => {
     const consent = writeConsent(storage, value);
     captureAttribution(view?.location?.search, storage, consent);
     loadTrackingScripts(root, consent);
     removeLayer();
-    addSettingsButton();
-    returnFocus?.focus();
-    returnFocus = null;
     trackEvent('page_view', { path: view?.location?.pathname, locale: root.documentElement.lang }, trackingDependencies(root));
   };
 
@@ -352,7 +332,6 @@ function setupConsent(root) {
     const consent = readConsent(storage);
     captureAttribution(view?.location?.search, storage, consent);
     loadTrackingScripts(root, consent);
-    addSettingsButton();
     trackEvent('page_view', { path: view?.location?.pathname, locale: root.documentElement.lang }, trackingDependencies(root));
   } else {
     showPanel(false);

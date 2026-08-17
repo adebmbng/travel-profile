@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { renderConsentPanel } from './client-interactions.js';
+import { initInteractions, renderConsentPanel } from './client-interactions.js';
 
 describe('consent interface', () => {
   it('renders a localized first-visit panel with explicit choices', () => {
@@ -19,5 +19,31 @@ describe('consent interface', () => {
     expect(html).toContain('name="marketing"');
     expect(html).toContain('data-consent-action="save"');
     expect(html).toContain('Consent settings');
+  });
+
+  it('does not append a persistent privacy settings button after consent', () => {
+    const appended = [];
+    const root = {
+      documentElement: {
+        dataset: {},
+        classList: { add() {} },
+        toggleAttribute() {},
+        lang: 'id'
+      },
+      body: { classList: { add() {} }, appendChild(element) { appended.push(element); } },
+      head: { appendChild() {} },
+      createElement: () => ({ dataset: {}, addEventListener() {} }),
+      defaultView: {
+        location: { search: '', pathname: '/id/' },
+        localStorage: { getItem: () => '{"analytics":false,"marketing":false}' }
+      },
+      querySelector: () => null,
+      querySelectorAll: () => [],
+      addEventListener() {}
+    };
+
+    initInteractions(root);
+
+    expect(appended).toEqual([]);
   });
 });
