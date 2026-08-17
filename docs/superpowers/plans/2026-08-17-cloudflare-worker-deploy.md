@@ -120,7 +120,7 @@ Run: `npm test -- --run`, `npm run build`, `npm run check:assets`, `npm run chec
 
 Expected: all tests and checks exit 0.
 
-- [ ] **Step 4: Commit and push**
+- [x] **Step 4: Commit and push**
 
 ```bash
 git add README.md package.json wrangler.jsonc scripts/cloudflare-config.test.mjs docs/superpowers/specs/2026-08-17-cloudflare-worker-deploy-design.md docs/superpowers/plans/2026-08-17-cloudflare-worker-deploy.md
@@ -128,7 +128,7 @@ git commit -m "fix: configure Cloudflare Worker static deployment"
 git push origin master
 ```
 
-- [ ] **Step 5: Confirm the pushed tree**
+- [x] **Step 5: Confirm the pushed tree**
 
 Run: `git status --short --branch` and `git ls-remote --heads origin master`.
 
