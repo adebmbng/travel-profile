@@ -51,7 +51,7 @@
 - `escape-html.js` exports `escapeHtml(value)`.
 - `resolveRoute()` returns `{ locale: 'id'|'en', key: string, params: Record<string,string>, canonicalPath: string }` or `{ key: 'not-found', ... }`.
 
-- [ ] **Step 1: Write failing route and escaping tests**
+- [x] **Step 1: Write failing route and escaping tests**
 
 ```js
 import { describe, expect, it } from 'vitest';
@@ -86,33 +86,33 @@ it('escapes HTML-sensitive values', () => {
 });
 ```
 
-- [ ] **Step 2: Run the focused tests and verify they fail because modules do not exist**
+- [x] **Step 2: Run the focused tests and verify they fail because modules do not exist**
 
 Run: `npm test -- --run src/lib/route-utils.test.js src/lib/escape-html.test.js`
 
 Expected: FAIL with module-not-found errors for `route-utils.js` and `escape-html.js`.
 
-- [ ] **Step 3: Add the minimal Vite and Vitest configuration**
+- [x] **Step 3: Add the minimal Vite and Vitest configuration**
 
 Create `package.json` with scripts `dev`, `build`, `preview`, `test`, and `test:watch`; use `vite`, `vitest`, and `@vitejs/plugin-basic-ssl` only if local HTTPS is needed later. Configure Vitest for browser-independent ESM tests. Set `type` to `module`.
 
-- [ ] **Step 4: Add route data and route utilities**
+- [x] **Step 4: Add route data and route utilities**
 
 Define all route keys used by the approved information architecture, including `home`, `pilgrimage-overview`, `umrah-packages`, `umrah-preparation`, `hajj-information`, `worldwide-overview`, `destinations`, `destination-detail`, `packages`, `package-detail`, `custom-trip`, `family-group`, `travel-tools`, `about`, `why-rasuna`, `jakarta`, `bandung`, `articles`, `article-detail`, `faq`, `contact`, `privacy`, `cookies`, `affiliate-disclosure`, `terms`, `accessibility`, and `not-found`.
 
 Use real generated assets from `public/assets/generated/` in the records. Set exact safe defaults for unknown fields using the named configuration keys, never invented values.
 
-- [ ] **Step 5: Implement the minimal route and escaping functions**
+- [x] **Step 5: Implement the minimal route and escaping functions**
 
 Implement the signatures in the Interfaces block and keep them pure. Normalize trailing slashes, decode only safe route segments, preserve query strings outside route resolution, and return a not-found result for unknown locale or slug combinations.
 
-- [ ] **Step 6: Run focused tests and verify green**
+- [x] **Step 6: Run focused tests and verify green**
 
 Run: `npm test -- --run src/lib/route-utils.test.js src/lib/escape-html.test.js`
 
 Expected: all focused tests pass with no warnings.
 
-- [ ] **Step 7: Commit the foundation**
+- [x] **Step 7: Commit the foundation**
 
 ```bash
 git add package.json vite.config.js index.html src/site-data.js src/lib vitest.config.js .gitignore
