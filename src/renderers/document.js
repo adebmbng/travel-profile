@@ -19,6 +19,18 @@ function renderStructuredData(data) {
   return `<script type="application/ld+json">${json.replace(/</g, '\\u003c').replace(/>/g, '\\u003e').replace(/&/g, '\\u0026')}</script>`;
 }
 
+function renderSocialMetadata(route, metadata) {
+  if (route?.key !== 'home') return '';
+
+  const locale = route?.locale === 'en' ? 'en' : 'id';
+  const image = '/assets/generated/og-home-background.png';
+  const alt = locale === 'en'
+    ? 'A respectful pilgrimage setting and a family coastal journey'
+    : 'Suasana ziarah yang khidmat dan perjalanan keluarga di pesisir';
+
+  return `<meta property="og:type" content="website"><meta property="og:title" content="${escapeHtml(metadata.title)}"><meta property="og:description" content="${escapeHtml(metadata.description)}"><meta property="og:image" content="${image}"><meta property="og:image:alt" content="${escapeHtml(alt)}"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${escapeHtml(metadata.title)}"><meta name="twitter:description" content="${escapeHtml(metadata.description)}"><meta name="twitter:image" content="${image}"><meta name="twitter:image:alt" content="${escapeHtml(alt)}">`;
+}
+
 export function renderDocument(route, options = {}) {
   const locale = route?.locale === 'en' ? 'en' : 'id';
   const metadata = metadataFor(route, options);
@@ -31,7 +43,7 @@ export function renderDocument(route, options = {}) {
   const styles = options.styles ?? '';
   const scripts = options.scripts ?? '';
 
-  return `<!doctype html><html lang="${locale}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="${escapeHtml(metadata.description)}"><title>${escapeHtml(metadata.title)}</title><link rel="canonical" href="${escapeHtml(canonical)}">${styles}${renderStructuredData(options.structuredData)}</head><body>${renderShell(route, { body })}<noscript><p class="noscript-message">${escapeHtml(noScript)}</p></noscript>${scripts}</body></html>`;
+  return `<!doctype html><html lang="${locale}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="${escapeHtml(metadata.description)}"><title>${escapeHtml(metadata.title)}</title><link rel="canonical" href="${escapeHtml(canonical)}">${renderSocialMetadata(route, metadata)}${styles}${renderStructuredData(options.structuredData)}</head><body>${renderShell(route, { body })}<noscript><p class="noscript-message">${escapeHtml(noScript)}</p></noscript>${scripts}</body></html>`;
 }
 
 export function renderInitialDocument(pathname = '/id/') {

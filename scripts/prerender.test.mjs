@@ -25,4 +25,20 @@ describe('production route documents', () => {
     expect(html).toContain('/assets/index-abc.js');
     expect(html).not.toContain('/src/');
   });
+
+  it('adds the approved social card only to localized home documents', () => {
+    const assets = {
+      styles: '<link rel="stylesheet" href="/assets/index-abc.css">',
+      scripts: '<script type="module" src="/assets/index-abc.js"></script>'
+    };
+
+    const indonesianHome = buildStaticDocument('/id/', assets);
+    const englishHome = buildStaticDocument('/en/', assets);
+    const worldwide = buildStaticDocument('/id/wisata-dunia/', assets);
+
+    expect(indonesianHome).toContain('property="og:image" content="/assets/generated/og-home-background.png"');
+    expect(indonesianHome).toContain('name="twitter:card" content="summary_large_image"');
+    expect(englishHome).toContain('/assets/generated/og-home-background.png');
+    expect(worldwide).not.toContain('/assets/generated/og-home-background.png');
+  });
 });
