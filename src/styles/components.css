@@ -39,8 +39,8 @@
 .breadcrumbs li + li::before { padding-right: var(--space-2); content: '/'; }
 .card-image { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: var(--radius-md); }
 .card-image--placeholder { background: linear-gradient(135deg, var(--color-sand), var(--color-sky)); }
-[data-reveal] { transition: opacity var(--motion-slow) var(--motion-ease), transform var(--motion-slow) var(--motion-ease); }
-.js [data-reveal]:not([data-revealed]) { opacity: 0; transform: translateY(1rem); }
+[data-reveal] { transition: transform var(--motion-slow) var(--motion-ease); }
+.js [data-reveal]:not([data-revealed]) { transform: translateY(1rem); }
 .trust-ribbon { color: var(--color-ivory); background: var(--color-emerald-950); }
 .trust-ribbon .container { display: grid; gap: var(--space-2); padding-block: var(--space-3); font-size: var(--text-sm); }
 .trust-ribbon p { margin: 0; color: #d5e8e3; }
@@ -68,7 +68,7 @@
 .journey-finder__form legend { margin-bottom: var(--space-2); font-weight: 700; }
 .journey-finder__form label { display: grid; gap: var(--space-2); font-weight: 700; }
 .journey-finder__form fieldset label { display: flex; align-items: center; font-weight: 400; }
-.journey-finder__form input, .journey-finder__form select { min-height: 2.75rem; padding: .5rem .75rem; color: var(--color-ink); background: #fff; border: 1px solid var(--color-border); border-radius: var(--radius-sm); font: inherit; }
+.journey-finder__form input, .journey-finder__form select { min-height: 2.75rem; padding: .5rem .75rem; color: var(--color-forest-ink); background: #fff; border: 1px solid var(--color-border); border-radius: var(--radius-sm); font: inherit; }
 .journey-finder__notice, .configuration-note { color: var(--color-muted-ink); font-size: var(--text-sm); }
 .journey-result { display: grid; gap: var(--space-3); max-width: 44rem; padding: var(--space-4); background: var(--color-sky); border-radius: var(--radius-md); }
 .journey-result h3, .journey-result p { margin: 0; }
