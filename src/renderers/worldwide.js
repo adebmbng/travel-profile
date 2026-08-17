@@ -1,0 +1,16 @@
+import { DESTINATIONS } from '../site-data.js';
+import { escapeHtml } from '../lib/escape-html.js';
+import { routePath, renderCardImage, renderHeroImage, renderSectionHeading, renderWhatsAppLink } from './components.js';
+
+const COPY = Object.freeze({
+  id: Object.freeze({ eyebrow: 'Wisata Dunia', title: 'Dunia yang dapat dijelajahi bersama', description: 'Mulai dari inspirasi yang ramah keluarga, lalu konfirmasi detail yang sesuai dengan kebutuhan Anda.', destinations: 'Destinasi untuk dibayangkan', families: 'Keluarga & grup', couples: 'Perjalanan berdua', solo: 'Jelajah mandiri', note: 'Contoh perjalanan ini adalah konten statis, bukan jadwal atau ketersediaan langsung.', custom: 'Rencanakan perjalanan kustom' }),
+  en: Object.freeze({ eyebrow: 'Worldwide Travel', title: 'A world to explore together', description: 'Start with family-friendly inspiration, then confirm the details that fit your needs.', destinations: 'Destinations to imagine', families: 'Family & group', couples: 'Couple journeys', solo: 'Independent discovery', note: 'These journey examples are static content, not live schedules or availability.', custom: 'Plan a custom trip' })
+});
+function copy(locale) { return COPY[locale] ?? COPY.id; }
+function label(item, locale) { return item.labels?.[locale] ?? item.labels?.id ?? ''; }
+
+export function renderWorldwideOverview({ locale = 'id' } = {}) {
+  const text = copy(locale);
+  const personas = [[text.families, '/assets/generated/family-group-travel.png'], [text.couples, '/assets/generated/traveler-couple.png'], [text.solo, '/assets/generated/traveler-solo.png']];
+  return `<div class="worldwide-page"><section class="hero hero--worldwide"><div class="container hero__content"><div>${renderSectionHeading({ eyebrow: text.eyebrow, title: text.title, description: text.description, level: 1 })}<div class="hero__actions"><a class="button button--secondary" href="${escapeHtml(routePath(locale, 'destinations'))}">${escapeHtml(text.destinations)}</a><a class="button button--secondary" href="${escapeHtml(routePath(locale, 'custom-trip'))}">${escapeHtml(text.custom)}</a>${renderWhatsAppLink({ locale, journey: text.eyebrow })}</div></div>${renderHeroImage({ asset: '/assets/generated/hero-worldwide-master.png', mobileAsset: '/assets/generated/hero-worldwide-mobile.png', alt: locale === 'en' ? 'An Indonesian family exploring a sunny coastal village' : 'Keluarga Indonesia menjelajahi desa pesisir yang cerah' })}</div></section><section class="content-section container" data-reveal>${renderSectionHeading({ eyebrow: text.destinations, title: text.destinations, description: text.note })}<div class="content-grid content-grid--three">${DESTINATIONS.map((item) => `<article class="content-card">${renderCardImage(item.image, label(item, locale))}<h3>${escapeHtml(label(item, locale))}</h3></article>`).join('')}</div></section><section class="content-section container" data-reveal><div class="content-grid content-grid--three">${personas.map(([title, asset]) => `<article class="content-card">${renderCardImage(asset, title)}<h2>${escapeHtml(title)}</h2><p>${escapeHtml(text.note)}</p></article>`).join('')}</div></section><section class="final-cta"><div class="container"><p>${escapeHtml(text.note)}</p>${renderWhatsAppLink({ locale, journey: text.eyebrow })}</div></section></div>`;
+}

@@ -1,3 +1,5 @@
+import { recommendJourney, renderJourneyRecommendation } from './renderers/journey-finder.js';
+
 export function initClient(root = document) {
   if (!root?.documentElement || root.documentElement.dataset.clientInitialized === 'true') return;
 
@@ -40,6 +42,17 @@ export function initClient(root = document) {
   root.querySelectorAll('[data-cta]').forEach((cta) => {
     cta.addEventListener('click', () => {
       root.dispatchEvent(new CustomEvent('rasuna:cta', { detail: { type: cta.dataset.cta } }));
+    });
+  });
+
+  root.querySelectorAll('[data-journey-finder]').forEach((form) => {
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const values = Object.fromEntries(new FormData(form).entries());
+      const locale = root.documentElement.lang === 'en' ? 'en' : 'id';
+      const result = recommendJourney(values);
+      const container = form.parentElement?.querySelector('[data-journey-result]');
+      if (container) container.innerHTML = renderJourneyRecommendation({ locale, result });
     });
   });
 }

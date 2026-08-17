@@ -127,6 +127,16 @@ export function renderCardImage(asset, alt) {
   return `<img class="card-image" src="${escapeHtml(asset)}" alt="${escapeHtml(alt ?? '')}" loading="lazy" decoding="async">`;
 }
 
+export function renderHeroImage({ asset, mobileAsset, alt, className = 'hero__image' } = {}) {
+  if (!asset) return '';
+
+  const mobileSource = mobileAsset
+    ? `<source media="(max-width: 43rem)" srcset="${escapeHtml(mobileAsset)}">`
+    : '';
+
+  return `<picture class="${escapeHtml(className)}">${mobileSource}<img src="${escapeHtml(asset)}" alt="${escapeHtml(alt ?? '')}" fetchpriority="high" decoding="async"></picture>`;
+}
+
 export function renderSectionHeading({ eyebrow, title, description, level = 2 } = {}) {
   const tag = Number(level) === 1 ? 'h1' : Number(level) === 3 ? 'h3' : 'h2';
   const eyebrowHtml = eyebrow ? `<p class="eyebrow">${escapeHtml(eyebrow)}</p>` : '';

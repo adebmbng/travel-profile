@@ -1,4 +1,7 @@
 import { renderHeader, renderFooter, renderSectionHeading, renderWhatsAppLink } from './components.js';
+import { renderHome } from './home.js';
+import { renderHajjInformation, renderPilgrimageOverview, renderUmrahPackages, renderUmrahPreparation } from './pilgrimage.js';
+import { renderWorldwideOverview } from './worldwide.js';
 
 const PAGE_COPY = Object.freeze({
   id: Object.freeze({
@@ -27,6 +30,16 @@ function textFor(locale) {
 
 export function renderRoute(route = {}) {
   const locale = route.locale === 'en' ? 'en' : 'id';
+  const flagshipRenderers = {
+    home: renderHome,
+    'pilgrimage-overview': renderPilgrimageOverview,
+    'umrah-packages': renderUmrahPackages,
+    'umrah-preparation': renderUmrahPreparation,
+    'hajj-information': renderHajjInformation,
+    'worldwide-overview': renderWorldwideOverview
+  };
+  const renderer = flagshipRenderers[route.key];
+  if (renderer) return renderer({ locale, ...route.params });
   const text = textFor(locale);
   const isNotFound = route.key === 'not-found';
   const title = isNotFound ? text.notFoundTitle : route.key === 'home' ? text.homeTitle : text.homeTitle;

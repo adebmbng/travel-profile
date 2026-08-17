@@ -42,7 +42,8 @@ describe('shared page shell', () => {
     expect(html).toContain('<html lang="en">');
     expect(html).toContain('data-site-shell');
     expect(html).toContain('<nav class="site-nav"');
-    expect(html).toContain('<div id="app"><section class="page-intro');
+    expect(html).toContain('<div id="app"><div class="worldwide-page">');
+    expect(html).toContain('hero-worldwide-master.png');
     expect(html).toContain('src="/src/main.js"');
   });
 

@@ -19,7 +19,8 @@ describe('production route documents', () => {
 
     expect(html).toContain('<html lang="en">');
     expect(html).toContain('<link rel="canonical" href="/en/worldwide/">');
-    expect(html).toContain('<div id="app"><section class="page-intro');
+    expect(html).toContain('<div id="app"><div class="worldwide-page">');
+    expect(html).toContain('hero-worldwide-master.png');
     expect(html).toContain('/assets/index-abc.css');
     expect(html).toContain('/assets/index-abc.js');
     expect(html).not.toContain('/src/');
