@@ -39,7 +39,7 @@ The asset checker validates the generated-image manifest, file sizes, and source
 Unknown business facts intentionally remain named configuration fields in `src/site-data.js`. Replace and verify these before publishing:
 
 - `SITE_ORIGIN`
-- `PRIMARY_WHATSAPP_NUMBER`
+- `PRIMARY_WHATSAPP_NUMBER` (default: `081224426102`, normalized to `6281224426102` for `wa.me`)
 - `GTM_CONTAINER_ID`, `GA4_MEASUREMENT_ID`, `GOOGLE_ADS_CONVERSION_ID`, `META_PIXEL_ID`
 - `UMRAH_CERTIFICATION_NAME`, `UMRAH_CERTIFICATION_NUMBER`, `UMRAH_CERTIFICATION_ISSUER`, `UMRAH_CERTIFICATION_VERIFY_URL`
 - `JAKARTA_VERIFIED_SERVICE_DETAILS`, `BANDUNG_VERIFIED_SERVICE_DETAILS`

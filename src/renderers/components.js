@@ -9,6 +9,8 @@ const COPY = Object.freeze({
     closeMenu: 'Tutup menu',
     home: 'Rasuna Travel',
     consult: 'Konsultasi via WhatsApp',
+    floatingText: 'Hubungi kami',
+    floatingLabel: 'Hubungi Rasuna Travel via WhatsApp',
     informationPending: 'Informasi akan diperbarui setelah detail terverifikasi.',
     skip: 'Lewati ke konten utama',
     currentLanguage: 'Bahasa Indonesia',
@@ -24,6 +26,8 @@ const COPY = Object.freeze({
     closeMenu: 'Close menu',
     home: 'Rasuna Travel',
     consult: 'Consult on WhatsApp',
+    floatingText: 'Contact us',
+    floatingLabel: 'Contact Rasuna Travel on WhatsApp',
     informationPending: 'Information will be updated after details are verified.',
     skip: 'Skip to main content',
     currentLanguage: 'English',
@@ -89,6 +93,20 @@ export function renderWhatsAppLink(context = {}) {
   }
 
   return `<a class="button button--whatsapp" data-cta="whatsapp" href="${escapeHtml(href)}" target="_blank" rel="noopener noreferrer">${escapeHtml(copy(locale).consult)}</a>`;
+}
+
+export function renderFloatingWhatsApp({ locale = 'id', pagePath = '' } = {}) {
+  const safeLocale = locale === 'en' ? 'en' : 'id';
+  const href = buildWhatsAppUrl({
+    number: SITE_CONFIG.PRIMARY_WHATSAPP_NUMBER,
+    locale: safeLocale,
+    pagePath
+  });
+
+  if (!href) return '';
+
+  const text = copy(safeLocale);
+  return `<a class="floating-whatsapp" data-floating-whatsapp data-cta="whatsapp" href="${escapeHtml(href)}" target="_blank" rel="noopener noreferrer" aria-label="${escapeHtml(text.floatingLabel)}"><span class="floating-whatsapp__icon" aria-hidden="true">↗</span><span>${escapeHtml(text.floatingText)}</span></a>`;
 }
 
 const BUTTON_ATTRIBUTE_NAMES = new Set([

@@ -2,6 +2,12 @@ import { describe, expect, it } from 'vitest';
 import { buildWhatsAppUrl } from './whatsapp.js';
 
 describe('WhatsApp links', () => {
+  it('converts an Indonesian local number to the international wa.me format', () => {
+    const url = buildWhatsAppUrl({ number: '081224426102', locale: 'id' });
+
+    expect(url).toMatch(/^https:\/\/wa\.me\/6281224426102\?text=/);
+  });
+
   it('builds a contextual URL without including private form data', () => {
     const url = buildWhatsAppUrl({
       number: '628000000000',

@@ -8,7 +8,9 @@ export function normalizeWhatsAppNumber(number) {
   const raw = String(number).trim();
   if (!raw || /[a-z]/i.test(raw)) return null;
 
-  const digits = raw.replace(/\D/g, '');
+  let digits = raw.replace(/\D/g, '');
+  if (digits.startsWith('00')) digits = digits.slice(2);
+  if (digits.startsWith('0')) digits = `62${digits.slice(1)}`;
   if (digits.length < 8 || digits.length > 15) return null;
   return digits;
 }

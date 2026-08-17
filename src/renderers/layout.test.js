@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { renderButton, renderHeader, renderLanguageSwitcher, renderWhatsAppLink } from './components.js';
 import { renderDocument, renderInitialDocument } from './document.js';
+import { renderShell } from './layout.js';
 
 describe('shared page shell', () => {
   it('renders a bilingual header with current navigation state', () => {
@@ -19,17 +20,16 @@ describe('shared page shell', () => {
   it('renders a contextual WhatsApp link without exposing private form data', () => {
     const html = renderWhatsAppLink({ locale: 'id', journey: 'umrah', packageName: 'Paket Keluarga' });
 
-    expect(html).toContain('data-configuration-pending="true"');
-    expect(html).toContain('/id/kontak/');
+    expect(html).toContain('https://wa.me/6281224426102');
     expect(html).not.toContain('email');
   });
 
-  it('falls back to Contact when the WhatsApp number is not configured', () => {
-    const html = renderWhatsAppLink({ locale: 'id', journey: 'umrah' });
+  it('renders a floating WhatsApp contact link in the shared shell', () => {
+    const html = renderShell({ locale: 'id', key: 'home' });
 
-    expect(html).toContain('data-configuration-pending="true"');
-    expect(html).toContain('/id/kontak/');
-    expect(html).not.toContain('wa.me/');
+    expect(html).toContain('data-floating-whatsapp');
+    expect(html).toContain('href="https://wa.me/6281224426102?text=');
+    expect(html).toContain('Hubungi Rasuna Travel via WhatsApp');
   });
 
   it('renders document metadata and a no-JavaScript fallback', () => {

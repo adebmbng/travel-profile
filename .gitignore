@@ -1,6 +1,8 @@
 node_modules/
 dist/
 .worktrees/
+.wrangler/
+.dev.vars*
 .superpowers/sdd/
 .DS_Store
 *.log

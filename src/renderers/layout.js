@@ -1,4 +1,4 @@
-import { renderHeader, renderFooter, renderSectionHeading, renderWhatsAppLink } from './components.js';
+import { renderHeader, renderFooter, renderFloatingWhatsApp, renderSectionHeading, renderWhatsAppLink } from './components.js';
 import { renderHome } from './home.js';
 import { renderHajjInformation, renderPilgrimageOverview, renderUmrahPackages, renderUmrahPreparation } from './pilgrimage.js';
 import { renderWorldwideOverview } from './worldwide.js';
@@ -81,5 +81,5 @@ export function renderRoute(route = {}) {
 
 export function renderShell(route, { body = '' } = {}) {
   const locale = route?.locale === 'en' ? 'en' : 'id';
-  return `<a class="skip-link" href="#main-content">${locale === 'en' ? 'Skip to main content' : 'Lewati ke konten utama'}</a><div class="site-shell" data-site-shell>${renderHeader({ locale, currentKey: route?.key, params: route?.params })}<main id="main-content" tabindex="-1"><div id="app">${body}</div></main>${renderFooter({ locale })}</div><div class="language-status" aria-live="polite" aria-atomic="true"></div>`;
+  return `<a class="skip-link" href="#main-content">${locale === 'en' ? 'Skip to main content' : 'Lewati ke konten utama'}</a><div class="site-shell" data-site-shell>${renderHeader({ locale, currentKey: route?.key, params: route?.params })}<main id="main-content" tabindex="-1"><div id="app">${body}</div></main>${renderFooter({ locale })}</div>${renderFloatingWhatsApp({ locale, pagePath: route?.canonicalPath })}<div class="language-status" aria-live="polite" aria-atomic="true"></div>`;
 }
